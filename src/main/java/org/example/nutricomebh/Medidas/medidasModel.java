@@ -1,4 +1,4 @@
-package org.example.nutricomebh;
+package org.example.nutricomebh.Medidas;
 
 
 import jakarta.persistence.Column;
@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class medidas {
+public class medidasModel {
 
     @Column(name = "medidas")
     private String medida;
