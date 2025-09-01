@@ -4,6 +4,10 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.example.nutricomebh.Receitas.receitasModel;
+
+import java.util.List;
+import java.util.Set;
 
 
 //Transforma uma classe em uma entidade do BD
@@ -16,9 +20,14 @@ public class IngredienteModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
+    @Column(name = "ingrediente_id")
     private Long id;
 
-    @Column(name = "NOME")
+    @Column(name = "nome")
     private String nome;
+
+
+    @ManyToMany(mappedBy = "ingrediente")
+    private List<receitasModel> receita;
+
 }

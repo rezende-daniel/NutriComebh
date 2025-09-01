@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import org.example.nutricomebh.Ingrediente.IngredienteModel;
 
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "tb_receitas")
@@ -17,14 +18,26 @@ import java.util.List;
 public class receitasModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "receita_id")
     private Long id;
 
-    @Column(name = "Nome_Receita")
+
+
+    @Column(name = "nome_receita")
     private String nome;
 
 
-    private List<IngredienteModel> ingredientes;
+
 
     @Column(name = "preparo")
     private String preparo;
+
+
+    @ManyToMany
+    @JoinTable(
+            name = "ingredientes_receita",
+            joinColumns = @JoinColumn(name = "receita_id"),
+            inverseJoinColumns = @JoinColumn(name = "ingrediente_id")
+    )
+    private List<IngredienteModel> ingrediente;
 }
