@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.example.nutricomebh.Categoria.CategoriaModel;
 import org.example.nutricomebh.Ingrediente.IngredienteModel;
 
 import java.util.List;
@@ -40,4 +41,8 @@ public class receitasModel {
             inverseJoinColumns = @JoinColumn(name = "ingrediente_id")
     )
     private List<IngredienteModel> ingrediente;
+
+    @ManyToOne
+    @JoinColumn(name = "categoria_id")
+    private CategoriaModel categoria;
 }
