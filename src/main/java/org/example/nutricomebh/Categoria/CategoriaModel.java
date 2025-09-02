@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.example.nutricomebh.Receitas.receitasModel;
+import org.example.nutricomebh.Receitas.ReceitasModel;
 
 import java.util.List;
 
@@ -26,7 +26,7 @@ public class CategoriaModel {
 
 
     @OneToMany(mappedBy = "categoria")
-    private List<receitasModel> receitas;
+    private List<ReceitasModel> receitas;
 
 
 

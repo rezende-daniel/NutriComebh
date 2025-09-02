@@ -9,14 +9,13 @@ import org.example.nutricomebh.Categoria.CategoriaModel;
 import org.example.nutricomebh.Ingrediente.IngredienteModel;
 
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "tb_receitas")
 @NoArgsConstructor
 @Data
 @AllArgsConstructor
-public class receitasModel {
+public class ReceitasModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "receita_id")
