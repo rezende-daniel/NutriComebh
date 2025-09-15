@@ -29,8 +29,19 @@ public class IngredienteService {
     }
 
     //Alterar ingrediente
-
+    public IngredienteModel alterarIngrediente(IngredienteModel ingrediente,Long id){
+        Optional<IngredienteModel> ingredienteExiste = ingredienteRepository.findById(id);
+        if(ingredienteExiste.isPresent()){
+            IngredienteModel ingredienteAlterado = ingredienteExiste.get();
+            ingredienteAlterado.setId(id);
+            IngredienteModel ingredienteAtualizado = ingredienteRepository.save(ingredienteAlterado);
+            return ingredienteAtualizado;
+        }
+        return null;
+    }
 
     //Remover ingrediente
-
+    public void deletarIngrediente(Long id){
+        ingredienteRepository.deleteById(id);
+    }
 }
