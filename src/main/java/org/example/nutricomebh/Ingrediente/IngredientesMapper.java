@@ -15,7 +15,7 @@ public class IngredientesMapper {
         return ingredienteModel;
     }
 
-    public IngredientesDTO mapIngredienteModel(IngredienteModel ingredienteModel){
+    public IngredientesDTO mapIngrediente(IngredienteModel ingredienteModel){
         IngredientesDTO ingredientesDTO = new IngredientesDTO();
         ingredientesDTO.setId(ingredienteModel.getId());
         ingredientesDTO.setNome(ingredienteModel.getNome());
