@@ -12,7 +12,7 @@ public class CategoriaMapper {
         categoriaModel.setReceitas(categoriaDTO.getReceitas());
         return categoriaModel;
     }
-    public  CategoriaDTO mapCategoriaModel(CategoriaModel categoriaModel){
+    public  CategoriaDTO mapCategoria(CategoriaModel categoriaModel){
         CategoriaDTO categoriaDTO = new CategoriaDTO();
         categoriaDTO.setId(categoriaModel.getId());
         categoriaDTO.setNome(categoriaModel.getNome());
