@@ -36,8 +36,9 @@ public class ReceitasModel {
     )
     private List<IngredienteModel> ingrediente;
 
-    @Column(name = "medida")
-    private List<MedidasModel> medidas;
+
+
+
 
     @ManyToOne
     @JoinColumn(name = "categoria_id")

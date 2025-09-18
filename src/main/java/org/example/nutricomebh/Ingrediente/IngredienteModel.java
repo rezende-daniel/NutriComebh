@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.example.nutricomebh.Medidas.MedidasModel;
 import org.example.nutricomebh.Receitas.ReceitasModel;
 
 import java.util.List;
@@ -24,6 +25,14 @@ public class IngredienteModel {
 
     @Column(name = "nome")
     private String nome;
+
+    //cada ingredienten tem uma unica media
+    @ManyToOne
+    @JoinColumn(name = "medidas_id")
+    private MedidasModel medidas;
+
+
+
 
 
     @ManyToMany(mappedBy = "ingrediente")
