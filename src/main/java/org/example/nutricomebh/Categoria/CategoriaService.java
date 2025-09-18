@@ -2,19 +2,29 @@ package org.example.nutricomebh.Categoria;
 
 
 import org.example.nutricomebh.Receitas.ReceitasDTO;
+import org.example.nutricomebh.Receitas.ReceitasMapper;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Service
 public class CategoriaService {
     private final CategoriaMapper categoriaMapper;
     private final CategoriaRepository categoriaRepository;
-    private final ReceitasDTO receitasDTO;
+    private final ReceitasMapper receitasDTO;
 
-    public CategoriaService(CategoriaMapper categoriaMapper, CategoriaRepository categoriaRepository, ReceitasDTO receitasDTO) {
+    public CategoriaService(CategoriaMapper categoriaMapper, CategoriaRepository categoriaRepository, ReceitasMapper receitasDTO) {
         this.categoriaMapper = categoriaMapper;
         this.categoriaRepository = categoriaRepository;
         this.receitasDTO = receitasDTO;
+    }
+
+    //Listar por id
+    public CategoriaDTO listarCategoriaId(Long id){
+        Optional<CategoriaModel> categoriaModel = categoriaRepository.findById(id);
+        return categoriaModel.map(categoriaMapper::mapCategoria).orElse(null);
     }
 
     //Listar todas as categorias
@@ -42,4 +52,4 @@ public class CategoriaService {
 
         return categoriaMapper.mapCategoria(receitaAddCategoria);
     }
-}git
+}
