@@ -1,18 +1,20 @@
 package org.example.nutricomebh.Categoria;
 
 
+import org.example.nutricomebh.Receitas.ReceitasDTO;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class CategoriaService {
     private final CategoriaMapper categoriaMapper;
     private final CategoriaRepository categoriaRepository;
-    private final ReceitaMapper receitaMapper;
+    private final ReceitasDTO receitasDTO;
 
-    public CategoriaService(CategoriaMapper categoriaMapper, CategoriaRepository categoriaRepository, ReceitaMapper receitaMapper) {
+    public CategoriaService(CategoriaMapper categoriaMapper, CategoriaRepository categoriaRepository, ReceitasDTO receitasDTO) {
         this.categoriaMapper = categoriaMapper;
         this.categoriaRepository = categoriaRepository;
-        this.receitaMapper = receitaMapper;
+        this.receitasDTO = receitasDTO;
     }
 
     //Listar todas as categorias
@@ -33,9 +35,11 @@ public class CategoriaService {
         categoriaRepository.deleteById(id);
     }
     //Adicionar receita na categoria
-    public CategoriaDTO adicionarReceitaCategoria(List<ReceitaDTO> receita,Long id){
-        CategoriaModel receitaAdicionada = categoriaMapper.mapCategoria((CategoriaDTO),receita );
-        receitaAdicionada = categoriaRepository.save(receitaAdicionada);
-        return categoriaMapper.mapCategoria(receitaAdicionada);
+    public CategoriaDTO adicionarReceitaCategoria(List<ReceitasDTO> receita, int id){
+        CategoriaModel receitaAddCategoria = categoriaMapper.mapCategoria((CategoriaDTO) receita);
+        receitaAddCategoria.setId(id);
+        receitaAddCategoria = categoriaRepository.save(receitaAddCategoria);
+
+        return categoriaMapper.mapCategoria(receitaAddCategoria);
     }
-}
+}git
