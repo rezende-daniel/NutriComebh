@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.example.nutricomebh.Categoria.CategoriaModel;
 import org.example.nutricomebh.Ingrediente.IngredienteModel;
+import org.example.nutricomebh.Medidas.MedidasModel;
 
 import java.util.List;
 
@@ -21,17 +22,11 @@ public class ReceitasModel {
     @Column(name = "receita_id")
     private Long id;
 
-
-
     @Column(name = "nome_receita")
     private String nome;
 
-
-
-
     @Column(name = "preparo")
     private String preparo;
-
 
     @ManyToMany
     @JoinTable(
@@ -40,6 +35,9 @@ public class ReceitasModel {
             inverseJoinColumns = @JoinColumn(name = "ingrediente_id")
     )
     private List<IngredienteModel> ingrediente;
+
+    @Column(name = "medida")
+    private List<MedidasModel> medidas;
 
     @ManyToOne
     @JoinColumn(name = "categoria_id")

@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.example.nutricomebh.Categoria.CategoriaModel;
 import org.example.nutricomebh.Ingrediente.IngredienteModel;
+import org.example.nutricomebh.Medidas.MedidasModel;
 
 import java.util.List;
 
@@ -19,5 +20,6 @@ public class ReceitasDTO {
     private String nome;
     private String preparo;
     private List<IngredienteModel> ingrediente;
+    private List<MedidasModel> medidas;
     private CategoriaModel categoria;
 }

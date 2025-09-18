@@ -12,6 +12,7 @@ public class ReceitasMapper {
         receitasModel.setNome(receitaDTO.getNome());
         receitasModel.setPreparo(receitaDTO.getPreparo());
         receitasModel.setPreparo(receitaDTO.getPreparo());
+        receitasModel.setMedidas(receitaDTO.getMedidas());
         return receitasModel;
     }
     public ReceitasDTO mapReceitas(ReceitasModel receitasModel){
@@ -21,6 +22,7 @@ public class ReceitasMapper {
         receitasDTO.setNome(receitasModel.getNome());
         receitasDTO.setPreparo(receitasModel.getPreparo());
         receitasDTO.setIngrediente(receitasModel.getIngrediente());
+        receitasDTO.setMedidas(receitasModel.getMedidas());
         return receitasDTO;
     }
 
