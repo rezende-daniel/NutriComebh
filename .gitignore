@@ -33,4 +33,5 @@ build/
 .vscode/
 
 ###Credencial BD##
-*.env
+.env
+data/
