@@ -26,7 +26,7 @@ public class IngredienteModel {
     @Column(name = "nome")
     private String nome;
 
-    //cada ingredienten tem uma unica media
+    //cada ingredientem tem uma unica media
     @ManyToOne
     @JoinColumn(name = "medidas_id")
     private MedidasModel medidas;

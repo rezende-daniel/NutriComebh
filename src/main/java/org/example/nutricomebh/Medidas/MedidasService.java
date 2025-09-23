@@ -36,6 +36,10 @@ public class MedidasService {
         Optional<MedidasModel> medidasModel = medidasRepository.findById(id);
         return medidasModel.map(medidasMapper::mapMedidas).orElse(null);
     }
+    public MedidasModel buscaMedidaPorIdModel(Long id) {
+        MedidasModel medidasModel = medidasRepository.findById(id).orElse(null);
+        return medidasModel;
+    }
     //Deletar medida
     public void deletarMedidasPorId(Long id) {
         medidasRepository.deleteById(id);

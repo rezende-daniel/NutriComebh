@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Adicionar – Meu Site de Receitas</title>
+    <style>
+        /* Importando fonte e reset */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f0f4f8;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Navegação com gradiente e sombra */
+        nav {
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            padding: 1rem;
+        }
+        nav li {
+            margin: 0 1rem;
+        }
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-weight: 500;
+            transition: background 0.3s, transform 0.2s;
+        }
+        nav a:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+        nav a.active {
+            background: rgba(255,255,255,0.3);
+        }
+
+        /* Container central em formato de cartão */
+        main {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        .card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 400px;
+            width: 100%;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.05);
+            text-align: center;
+        }
+
+        /* Botão Voltar estilizado */
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #ececec;
+            color: #555;
+            border: none;
+            padding: 0.6rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background 0.2s, transform 0.2s;
+            margin-bottom: 1.5rem;
+        }
+        .back-btn:hover {
+            background: #ddd;
+            transform: translateY(-1px);
+        }
+
+        /* Botões do Menu */
+        .menu-btn {
+            display: block;
+            background: linear-gradient(90deg, #43cea2, #185a9d);
+            color: #fff;
+            text-decoration: none;
+            padding: 1rem 0;
+            margin: 0.75rem 0;
+            border-radius: 50px;
+            font-weight: 500;
+            transition: box-shadow 0.3s, transform 0.2s;
+        }
+        .menu-btn:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transform: translateY(-3px);
+        }
+
+        /* Responsividade */
+        @media (max-width: 480px) {
+            nav ul {
+                flex-wrap: wrap;
+            }
+            .card {
+                padding: 1.5rem;
+            }
+            .menu-btn {
+                padding: 0.8rem 0;
+            }
+        }
+    </style>
+</head>
+<body>
+<nav>
+    <ul>
+        <li><a th:href="@{/}" th:classappend="${page=='home'} ? 'active'">Home</a></li>
+        <li><a th:href="@{/adicionar}" th:classappend="${page=='adicionar'} ? 'active'">Adicionar</a></li>
+        <li><a th:href="@{/ingredientes}" th:classappend="${page=='ingredientes'} ? 'active'">Ingredientes</a></li>
+        <li><a th:href="@{/receitas}" th:classappend="${page=='receitas'} ? 'active'">Receitas</a></li>
+        <li><a th:href="@{/cardapio}" th:classappend="${page=='cardapio'} ? 'active'">Cardápio</a></li>
+    </ul>
+</nav>
+
+<main>
+    <div class="card">
+        <button class="back-btn" onclick="history.back()">← Voltar</button>
+        <a th:href="@{/adicionar/ui/paginaAdicionarIngrediente}" class="menu-btn">Adicionar Ingrediente</a>
+        <a th:href="@{/adicionar/receita}" class="menu-btn">Adicionar Receita</a>
+    </div>
+</main>
+</body>
+</html>
