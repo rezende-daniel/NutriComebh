@@ -205,15 +205,23 @@
 <main>
     <div class="card">
         <h2>Adicionar Receita</h2>
-        <form th:action="@{/adicionar/receita}" th:object="${receita}" method="post">
+        <form th:action="@{/receita/ui/adicionarReceitaBd}" th:object="${receitas}" method="post">
             <div>
                 <label for="titulo">Título da Receita</label>
-                <input type="text" id="titulo" th:field="*{titulo}" placeholder="Ex: Bolo de Cenoura" required>
+                <input type="text" id="titulo" th:field="*{nome}" placeholder="Ex: Bolo de Cenoura" required>
             </div>
             <div>
                 <label for="descricao">Modo de Preparo</label>
-                <textarea id="descricao" th:field="*{descricao}" rows="4" placeholder="Descreva o passo a passo" required></textarea>
+                <textarea id="descricao" th:field="*{preparo}" rows="4" placeholder="Descreva o passo a passo" required></textarea>
             </div>
+            <div>
+                <label for="categoria">Categoria da Receita</label>
+                <select id="categoria" th:field="*{categoria}" required>
+                    <option value="" disabled selected>Selecione</option>
+                    <option th:each="c : ${listaCategoria}" th:value="${c.id}" th:text="${c.nome}"></option>
+                </select>
+            </div>
+
             <div class="items-section">
                 <label>Ingredientes</label>
                 <table id="itens-table">
@@ -241,7 +249,7 @@
                 <td>
                     <select name="itens[__index__].ingrediente.id" required>
                         <option value="" disabled selected>Selecione</option>
-                        <option th:each="i : ${ingredientes}" th:value="${i.id}" th:text="${i.nome}"></option>
+                        <option th:each="i : ${listaIngredientes}" th:value="${i.id}" th:text="${i.nome}"></option>
                     </select>
                 </td>
                 <td>
@@ -250,7 +258,7 @@
                 <td>
                     <select name="itens[__index__].medida.id" required>
                         <option value="" disabled selected>Selecione</option>
-                        <option th:each="m : ${medidas}" th:value="${m.id}" th:text="${m.nome}"></option>
+                        <option th:each="m : ${listaMedidas}" th:value="${m.id}" th:text="${m.medida}"></option>
                     </select>
                 </td>
                 <td>

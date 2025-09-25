@@ -52,12 +52,12 @@ public class IngredienteService {
     }
 
     //Alterar ingrediente
-    public IngredientesDTO alterarIngrediente(IngredienteModel ingrediente,Long id){
+    public IngredientesDTO alterarIngrediente(IngredientesDTO ingrediente,Long id){
         Optional<IngredienteModel> ingredienteExiste = ingredienteRepository.findById(id);
         if(ingredienteExiste.isPresent()){
-            IngredienteModel ingredienteAlterado = ingredienteExiste.get();
-            ingredienteAlterado.setId(id);
-            IngredienteModel ingredienteAtualizado = ingredienteRepository.save(ingredienteAlterado);
+            IngredienteModel ingredienteAtualizado = ingredientesMapper.mapIngrediente(ingrediente);
+            ingredienteAtualizado.setId(id);
+            IngredienteModel ingredienteAlterado = ingredienteRepository.save(ingredienteAtualizado);
             return ingredientesMapper.mapIngrediente(ingredienteAlterado);
         }
         return null;

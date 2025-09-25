@@ -54,7 +54,7 @@ public class IngredienteController {
 
     //Alterar ingrediente
     @PutMapping("/alterarIngrediente")
-    public ResponseEntity<String> alterarIngrediente(@RequestBody IngredienteModel ingrediente){
+    public ResponseEntity<String> alterarIngrediente(@RequestBody IngredientesDTO ingrediente){
         if (ingredienteService.buscarIngredientePorId(ingrediente.getId()) != null){
             ingredienteService.alterarIngrediente(ingrediente, ingrediente.getId());
             return ResponseEntity.status(HttpStatus.OK).body("Ingrediente alterado");

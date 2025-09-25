@@ -45,8 +45,7 @@ public class IngredienteControllerUI {
     //Adicona ingrediente junto com a medida
     @PostMapping("/adicionaIngrediente")
     public String adicionaIngrediente(@ModelAttribute IngredientesDTO ingredientes, RedirectAttributes redirectAttributes) {
-        System.out.println(ingredientes);
-        //System.out.println(medidasDTO);
+
         ingredienteService.criarIngrediente(ingredientes);
         redirectAttributes.addFlashAttribute("message", "Ingrediente adicionado com sucesso!");
         return "redirect:/";
@@ -59,4 +58,27 @@ public class IngredienteControllerUI {
         return "listaIngredientes";
 
     }
+    //Pagina de listar ingrediente
+    @GetMapping("/paginaListarIngrediente")
+    public String paginaListarIngrediente(Model model) {
+        List<IngredientesDTO>  listaIngredientes = ingredienteService.listarIngredientes();
+        model.addAttribute("ingredientes", listaIngredientes);
+        List<MedidasDTO>  listaMedidas = medidasService.listaMedidas();
+        model.addAttribute("listaMedidas", listaMedidas);
+        return "listarIngredientes";
+    }
+    //Pagina de editar ingreiente
+    @GetMapping("/editarIngredientePagina/{id}")
+    public String editarIngredientePagina(@PathVariable long id, Model model) {
+        IngredientesDTO ingrediente = ingredienteService.buscarIngredientePorId(id);
+        model.addAttribute("ingrediente", ingrediente);
+        return "editarIngrediente";
+    }
+    //atualizar ingrediente
+    @PostMapping("/editarIngrediente/{id}")
+    public String alterarIngrediente(@PathVariable Long id, IngredientesDTO ingrediente) {
+        ingredienteService.alterarIngrediente(ingrediente,id);
+        return "redirect:/adicionar/ui/paginaListarIngrediente";
+    }
+
 }
