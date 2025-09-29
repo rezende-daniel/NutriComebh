@@ -1,6 +1,7 @@
 package org.example.nutricomebh.Receitas;
 
 
+import org.example.nutricomebh.Ingrediente.IngredientesDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +21,8 @@ public class ReceitasController {
 
     //Adiciona receita
     @PostMapping("/criaReceita")
-    public ResponseEntity<String> criaMissao(@RequestBody ReceitasDTO receitas){
+    public ResponseEntity<String> criaReceita(@RequestBody ReceitasDTO receitas){
+
         ReceitasDTO novaReceita = receitasService.criarReceita(receitas);
         return ResponseEntity.status(HttpStatus.CREATED).body(novaReceita.toString());
     }

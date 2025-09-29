@@ -45,7 +45,7 @@ public class CategoriaService {
         categoriaRepository.deleteById(id);
     }
     //Adicionar receita na categoria
-    public CategoriaDTO adicionarReceitaCategoria(List<ReceitasDTO> receita, int id){
+    public CategoriaDTO adicionarReceitaCategoria(List<ReceitasDTO> receita, Long id){
         CategoriaModel receitaAddCategoria = categoriaMapper.mapCategoria((CategoriaDTO) receita);
         receitaAddCategoria.setId(id);
         receitaAddCategoria = categoriaRepository.save(receitaAddCategoria);

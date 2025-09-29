@@ -14,7 +14,8 @@ import java.util.List;
 public class CategoriaDTO {
 
 
-    private int id;
+    private Long id;
     private String nome;
     private List<ReceitasModel> receitas;
+
 }

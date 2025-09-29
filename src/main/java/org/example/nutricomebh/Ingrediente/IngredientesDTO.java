@@ -17,8 +17,6 @@ public class IngredientesDTO {
 
         private Long id;
         private String nome;
-        private MedidasModel medidas;
-
         private List<ReceitasModel> receita;
 
 

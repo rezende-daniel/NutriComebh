@@ -2,141 +2,60 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Adicionar Receita – Meu Site de Receitas</title>
+    <title>Adicionar Receita</title>
     <style>
-        /* Fonte e reset */
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
         body {
             font-family: 'Poppins', sans-serif;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
             background: #f0f4f8;
-            color: #333;
-        }
-
-        /* Navegação */
-        nav {
-            background: linear-gradient(90deg, #667eea, #764ba2);
-            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-        nav ul {
-            list-style: none;
-            display: flex;
-            justify-content: center;
-            padding: 1rem;
-        }
-        nav li {
-            margin: 0 1rem;
-        }
-        nav a {
-            color: #fff;
-            text-decoration: none;
-            padding: 0.5rem 1rem;
-            border-radius: 50px;
-            font-weight: 500;
-            transition: background 0.3s, transform 0.2s;
-        }
-        nav a:hover {
-            background: rgba(255,255,255,0.2);
-            transform: translateY(-2px);
-        }
-        nav a.active {
-            background: rgba(255,255,255,0.3);
-        }
-
-        /* Cartão central */
-        main {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             padding: 2rem;
         }
-        .card {
-            background: #fff;
-            border-radius: 12px;
-            padding: 2rem;
-            max-width: 600px;
-            width: 100%;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.05);
-        }
-        .card h2 {
+        h2 {
             text-align: center;
-            margin-bottom: 1.5rem;
-            font-weight: 600;
-            color: #333;
+            margin-bottom: 2rem;
         }
-
-        /* Formulário */
         form {
+            max-width: 800px;
+            margin: auto;
+            background: #fff;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.05);
             display: flex;
             flex-direction: column;
             gap: 1rem;
         }
         label {
             font-weight: 500;
-            font-size: 0.95rem;
         }
-        input[type="text"],
-        textarea,
-        select,
-        input[type="number"] {
-            width: 100%;
-            padding: 0.75rem 1rem;
+        input, textarea, select {
+            padding: 0.75rem;
             border: 1px solid #ccc;
             border-radius: 8px;
             font-size: 1rem;
-            transition: border-color 0.2s, box-shadow 0.2s;
+            width: 100%;
         }
-        input:focus,
-        textarea:focus,
-        select:focus {
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102,126,234,0.2);
-            outline: none;
-        }
-
-        /* Seção de itens */
-        .items-section label {
-            margin-bottom: 0.5rem;
-        }
-        #itens-table {
+        table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 0.5rem;
+            margin-top: 1rem;
         }
-        #itens-table th,
-        #itens-table td {
-            border: 1px solid #ddd;
-            padding: 0.5rem;
-            text-align: center;
+        th, td {
+            padding: 0.75rem;
+            border-bottom: 1px solid #eee;
         }
-        .add-btn {
-            background: linear-gradient(90deg, #43cea2, #185a9d);
-            color: #fff;
+        .btn {
+            padding: 0.75rem;
             border: none;
-            padding: 0.75rem 1rem;
             border-radius: 50px;
             font-weight: 500;
             cursor: pointer;
-            transition: box-shadow 0.3s, transform 0.2s;
-            align-self: flex-start;
-            margin-bottom: 1rem;
         }
-        .add-btn:hover {
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            transform: translateY(-2px);
+        .btn-add {
+            background: #2196F3;
+            color: #fff;
+            margin-top: 0.5rem;
         }
-        .remove-btn {
+        .btn-remove {
             background: #e57373;
             color: #fff;
             border: none;
@@ -145,149 +64,135 @@
             height: 1.75rem;
             font-size: 1rem;
             cursor: pointer;
-            transition: background 0.2s;
-        }
-        .remove-btn:hover {
-            background: #ef5350;
-        }
-
-        /* Botões de ação */
-        .btn-group {
-            display: flex;
-            justify-content: space-between;
-            gap: 1rem;
-        }
-        .btn {
-            flex: 1;
-            text-align: center;
-            padding: 0.75rem 0;
-            border: none;
-            border-radius: 50px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: transform 0.2s;
         }
         .btn-submit {
             background: linear-gradient(90deg, #43cea2, #185a9d);
             color: #fff;
         }
-        .btn-submit:hover {
-            transform: translateY(-2px);
-        }
-        .btn-cancel {
-            background: #ececec;
-            color: #555;
-        }
-        .btn-cancel:hover {
-            background: #ddd;
-            transform: translateY(-1px);
-        }
-
-        /* Responsividade */
-        @media (max-width: 600px) {
-            .btn-group {
-                flex-direction: column;
-            }
-        }
     </style>
 </head>
 <body>
-<nav>
-    <ul>
-        <li><a th:href="@{/}" th:classappend="${page=='home'} ? 'active'">Home</a></li>
-        <li><a th:href="@{/adicionar}" th:classappend="${page=='adicionar'} ? 'active'">Adicionar</a></li>
-        <li><a th:href="@{/ingredientes}" th:classappend="${page=='ingredientes'} ? 'active'">Ingredientes</a></li>
-        <li><a th:href="@{/receitas}" th:classappend="${page=='receitas'} ? 'active'">Receitas</a></li>
-        <li><a th:href="@{/cardapio}" th:classappend="${page=='cardapio'} ? 'active'">Cardápio</a></li>
-    </ul>
-</nav>
+<h2>Adicionar Receita</h2>
+<form th:action="@{/receita/ui/adicionarReceitaBd}" th:object="${receitas}" method="post">
+    <div>
+        <label for="nome">Nome da Receita</label>
+        <input type="text" id="nome" th:field="*{nome}" required>
+    </div>
 
-<main>
-    <div class="card">
-        <h2>Adicionar Receita</h2>
-        <form th:action="@{/receita/ui/adicionarReceitaBd}" th:object="${receitas}" method="post">
-            <div>
-                <label for="titulo">Título da Receita</label>
-                <input type="text" id="titulo" th:field="*{nome}" placeholder="Ex: Bolo de Cenoura" required>
-            </div>
-            <div>
-                <label for="descricao">Modo de Preparo</label>
-                <textarea id="descricao" th:field="*{preparo}" rows="4" placeholder="Descreva o passo a passo" required></textarea>
-            </div>
-            <div>
-                <label for="categoria">Categoria da Receita</label>
-                <select id="categoria" th:field="*{categoria}" required>
-                    <option value="" disabled selected>Selecione</option>
-                    <option th:each="c : ${listaCategoria}" th:value="${c.id}" th:text="${c.nome}"></option>
-                </select>
-            </div>
+    <div>
+        <label for="preparo">Modo de Preparo</label>
+        <textarea id="preparo" th:field="*{preparo}" rows="4" required></textarea>
+    </div>
 
-            <div class="items-section">
-                <label>Ingredientes</label>
-                <table id="itens-table">
-                    <thead>
-                    <tr>
-                        <th>Ingrediente</th>
-                        <th>Quantidade</th>
-                        <th>Medida</th>
-                        <th></th>
-                    </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
-                <button type="button" class="add-btn" onclick="addItem()">+ Adicionar Item</button>
-            </div>
-            <div class="btn-group">
-                <button type="submit" class="btn btn-submit">Salvar Receita</button>
-                <button type="button" class="btn btn-cancel" onclick="history.back()">Cancelar</button>
-            </div>
-        </form>
+    <div>
+        <label for="categoria">Categoria</label>
+        <select id="categoria" th:field="*{categoria.id}" required>
+            <option value="" disabled selected>Selecione</option>
+            <option th:each="c : ${listaCategoria}" th:value="${c.id}" th:text="${c.nome}"></option>
+        </select>
+    </div>
 
-        <!-- Template oculto para linha de ingrediente -->
-        <table style="display:none">
-            <tr id="row-template">
+    <div>
+        <label>Ingredientes</label>
+        <table>
+            <thead>
+            <tr>
+                <th>Ingrediente</th>
+                <th>Medida</th>
+                <th>Quantidade</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody id="ingredientes-body">
+            <tr th:each="item, iterStat : ${listaIngredientes}">
                 <td>
-                    <select name="itens[__index__].ingrediente.id" required>
-                        <option value="" disabled selected>Selecione</option>
-                        <option th:each="i : ${listaIngredientes}" th:value="${i.id}" th:text="${i.nome}"></option>
+                    <select th:name="'itens[' + ${iterStat.index} + '].ingrediente.id'" required>
+                        <option th:each="i : ${listaIngredientes}" th:value="${i.id}" th:text="${i.nome}"
+                                th:selected="${i.id == item.id}"></option>
                     </select>
                 </td>
                 <td>
-                    <input type="number" name="itens[__index__].quantidade" step="0.01" required>
-                </td>
-                <td>
-                    <select name="itens[__index__].medida.id" required>
-                        <option value="" disabled selected>Selecione</option>
-                        <option th:each="m : ${listaMedidas}" th:value="${m.id}" th:text="${m.medida}"></option>
+                    <select th:name="'itens[' + ${iterStat.index} + '].medida.id'" required>
+                        <option th:each="m : ${listaMedidas}" th:value="${m.id}" th:text="${m.medida}"
+                                th:selected="${m.id == item.id}"></option>
                     </select>
                 </td>
                 <td>
-                    <button type="button" class="remove-btn" onclick="removeItem(this)">✕</button>
+                    <input type="number" step="0,1"
+                           th:name="'itens[' + ${iterStat.index} + '].quantidade'"
+                           th:value="${receitas.quantidade}" required>
+                </td>
+                <td>
+                    <button type="button" class="btn-remove" onclick="removerLinha(this)">✕</button>
                 </td>
             </tr>
+            </tbody>
         </table>
+        <button type="button" class="btn btn-add" onclick="adicionarIngrediente()">+ Adicionar Ingrediente</button>
     </div>
-</main>
+
+    <button type="submit" class="btn btn-submit">Salvar Receita</button>
+</form>
+
+<!-- Template oculto -->
+<table style="display:none">
+    <tr id="ingrediente-template">
+        <td>
+            <select name="itens[__index__].ingrediente.id" required>
+                <option value="" disabled selected>Selecione</option>
+                <option th:each="i : ${listaIngredientes}" th:value="${i.id}" th:text="${i.nome}"></option>
+            </select>
+        </td>
+        <td>
+            <select name="itens[__index__].medida.id" required>
+                <option value="" disabled selected>Selecione</option>
+                <option th:each="m : ${listaMedidas}" th:value="${m.id}" th:text="${m.medida}"></option>
+            </select>
+        </td>
+        <td>
+            <input type="number" name="itens[__index__].quantidade" step="0.1" required>
+        </td>
+        <td>
+            <button type="button" class="btn-remove" onclick="removerLinha(this)">✕</button>
+        </td>
+    </tr>
+</table>
 
 <script>
-    let counter = 0;
+    const tbody = document.getElementById('ingredientes-body');
+    const templateRow = document.getElementById('ingrediente-template');
+    let index = tbody ? tbody.querySelectorAll('tr').length : 0;
 
-    function addItem() {
-        const template = document.getElementById('row-template');
-        const clone = template.cloneNode(true);
+    function adicionarIngrediente() {
+        const clone = templateRow.cloneNode(true);
         clone.removeAttribute('id');
         clone.style.display = '';
-        const html = clone.innerHTML.replace(/__index__/g, counter);
-        clone.innerHTML = html;
-        document.querySelector('#itens-table tbody').appendChild(clone);
-        counter++;
+        clone.innerHTML = clone.innerHTML.replace(/__index__/g, index);
+        tbody.appendChild(clone);
+        index++;
+        reindexarCampos();
     }
 
-    function removeItem(btn) {
-        const row = btn.closest('tr');
-        row.remove();
+    function removerLinha(btn) {
+        const tr = btn.closest('tr');
+        if (tr) {
+            tr.remove();
+            index = Math.max(0, index - 1);
+            reindexarCampos();
+        }
+    }
+
+    function reindexarCampos() {
+        const rows = tbody.querySelectorAll('tr');
+        rows.forEach((row, i) => {
+            row.querySelectorAll('select, input').forEach(el => {
+                if (el.name) {
+                    el.name = el.name.replace(/itens\[\d+\]/, `itens[${i}]`);
+                }
+            });
+        });
+        index = rows.length;
     }
 </script>
 </body>
 </html>
-

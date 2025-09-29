@@ -22,4 +22,6 @@ public class ReceitasDTO {
     private List<IngredienteModel> ingrediente;
     private List<MedidasModel> medidas;
     private CategoriaModel categoria;
+    private List<Double> quantidade;
+
 }

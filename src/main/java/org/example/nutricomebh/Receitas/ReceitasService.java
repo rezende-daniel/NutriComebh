@@ -1,6 +1,9 @@
 package org.example.nutricomebh.Receitas;
 
 
+import org.example.nutricomebh.Ingrediente.IngredienteModel;
+import org.example.nutricomebh.Ingrediente.IngredientesDTO;
+import org.example.nutricomebh.Ingrediente.IngredientesMapper;
 import org.springframework.stereotype.Service;
 
 import java.io.Serial;
@@ -11,12 +14,14 @@ import java.util.stream.Collectors;
 @Service
 public class ReceitasService {
     private final ReceitasMapper receitasMapper;
-    private ReceitasRepository receitasRepository;
+    private final IngredientesMapper ingredientesMapper;
+    private final ReceitasRepository receitasRepository;
 
 
-    public ReceitasService(ReceitasRepository receitasRepository, ReceitasMapper receitasMapper) {
+    public ReceitasService(ReceitasRepository receitasRepository, ReceitasMapper receitasMapper, IngredientesMapper ingredientesMapper) {
         this.receitasRepository = receitasRepository;
         this.receitasMapper = receitasMapper;
+        this.ingredientesMapper = ingredientesMapper;
     }
 
     //listar todas as receitas

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Receitas – Meu Site de Receitas</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f0f4f8;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        nav {
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            padding: 1rem;
+        }
+        nav li {
+            margin: 0 1rem;
+        }
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-weight: 500;
+            transition: background 0.3s, transform 0.2s;
+        }
+        nav a:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+        nav a.active {
+            background: rgba(255,255,255,0.3);
+        }
+
+        main {
+            flex: 1;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h2 {
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        table {
+            width: 100%;
+            max-width: 900px;
+            border-collapse: collapse;
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.05);
+        }
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        th {
+            background: #f7f9fc;
+            font-weight: 500;
+        }
+
+        .actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+        .btn {
+            padding: 0.4rem 0.8rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .btn-edit {
+            background: #4CAF50;
+            color: #fff;
+        }
+        .btn-edit:hover {
+            background: #45a049;
+        }
+
+        @media (max-width: 600px) {
+            table, th, td {
+                font-size: 0.875rem;
+            }
+            .actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+<nav>
+    <ul>
+        <li><a th:href="@{/}" th:classappend="${page=='home'} ? 'active'">Home</a></li>
+        <li><a th:href="@{/adicionar}" th:classappend="${page=='adicionar'} ? 'active'">Adicionar</a></li>
+        <li><a th:href="@{/ingredientes}" th:classappend="${page=='ingredientes'} ? 'active'">Ingredientes</a></li>
+        <li><a th:href="@{/receitas}" th:classappend="${page=='receitas'} ? 'active'">Receitas</a></li>
+        <li><a th:href="@{/cardapio}" th:classappend="${page=='cardapio'} ? 'active'">Cardápio</a></li>
+    </ul>
+</nav>
+
+<main>
+    <input type="text" id="searchReceita" placeholder="Pesquisar receita..." style="
+  width: 100%;
+  max-width: 400px;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1.5rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+">
+
+    <h2>Lista de Receitas</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Título</th>
+            <th>Categoria</th>
+            <th>Ações</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="receita : ${listaReceitas}">
+            <td th:text="${receita.nome}">Bolo de Cenoura</td>
+            <td th:text="${receita.categoria?.nome}">Sobremesa</td>
+            <td>
+                <div class="actions">
+                    <a th:href="@{'/receita/ui/paginaEditarReceita/' + ${receita.id}}" class="btn btn-edit">Editar</a>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</main>
+</body>
+</html>
+<script>
+    const searchInput = document.getElementById('searchReceita');
+    const table = document.querySelector('table');
+    const rows = table.getElementsByTagName('tr');
+
+    searchInput.addEventListener('keyup', function () {
+        const filter = searchInput.value.toLowerCase();
+        for (let i = 1; i < rows.length; i++) {
+            const td = rows[i].getElementsByTagName('td')[0]; // coluna do título
+            if (td) {
+                const text = td.textContent || td.innerText;
+                rows[i].style.display = text.toLowerCase().includes(filter) ? '' : 'none';
+            }
+        }
+    });
+</script>

@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Receita – Meu Site de Receitas</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f0f4f8;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        nav {
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            padding: 1rem;
+        }
+        nav li {
+            margin: 0 1rem;
+        }
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-weight: 500;
+            transition: background 0.3s, transform 0.2s;
+        }
+        nav a:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+        nav a.active {
+            background: rgba(255,255,255,0.3);
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 700px;
+            width: 100%;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.05);
+        }
+
+        .card h2 {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        label {
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        input[type="text"],
+        textarea,
+        select,
+        input[type="number"] {
+            padding: 0.75rem 1rem;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 1rem;
+            width: 100%;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        th, td {
+            padding: 0.75rem;
+            border-bottom: 1px solid #eee;
+            text-align: left;
+        }
+
+        th {
+            background: #f7f9fc;
+        }
+
+        .btn-group {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 0.75rem;
+            border: none;
+            border-radius: 50px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        .btn-submit {
+            background: linear-gradient(90deg, #43cea2, #185a9d);
+            color: #fff;
+        }
+
+        .btn-cancel {
+            background: #ececec;
+            color: #555;
+        }
+
+        .btn-remove {
+            background: #e57373;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 1.75rem;
+            height: 1.75rem;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        .btn-add {
+            background: #2196F3;
+            color: #fff;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-weight: 500;
+            margin-top: 0.5rem;
+            cursor: pointer;
+            border: none;
+        }
+
+        @media (max-width: 600px) {
+            .btn-group {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+<nav>
+    <ul>
+        <li><a th:href="@{/}" th:classappend="${page=='home'} ? 'active'">Home</a></li>
+        <li><a th:href="@{/adicionar}" th:classappend="${page=='adicionar'} ? 'active'">Adicionar</a></li>
+        <li><a th:href="@{/ingredientes}" th:classappend="${page=='ingredientes'} ? 'active'">Ingredientes</a></li>
+        <li><a th:href="@{/receitas}" th:classappend="${page=='receitas'} ? 'active'">Receitas</a></li>
+        <li><a th:href="@{/cardapio}" th:classappend="${page=='cardapio'} ? 'active'">Cardápio</a></li>
+    </ul>
+</nav>
+
+<main>
+    <div class="card">
+        <h2>Editar Receita</h2>
+        <form th:action="@{/receita/atualizar}" th:object="${receita}" method="post">
+            <input type="hidden" th:field="*{id}" />
+
+            <div>
+                <label for="nome">Título da Receita</label>
+                <input type="text" id="nome" th:field="*{nome}" required>
+            </div>
+
+            <div>
+                <label for="preparo">Modo de Preparo</label>
+                <textarea id="preparo" th:field="*{preparo}" rows="4" required></textarea>
+            </div>
+
+            <div>
+                <label for="categoria">Categoria</label>
+                <select id="categoria" th:field="*{categoria.id}" required>
+                    <option value="" disabled>Selecione</option>
+                    <option th:each="c : ${listaCategoria}" th:value="${c.id}" th:text="${c.nome}"></option>
+                </select>
+            </div>
+
+            <div>
+                <label>Ingredientes</label>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Ingrediente</th>
+                        <th>Quantidade</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody id="ingredientes-body">
+                    <tr th:each="item, iterStat : ${receita.ingrediente}">
+                        <td>
+                            <select th:name="'itens[' + ${iterStat.index} + '].ingrediente.id'" required>
+                                <option th:each="i : ${ingredientes}" th:value="${i.id}" th:text="${i.nome}"
+                                        th:selected="${i.id == item.ingrediente.id}"></option>
+                            </select>
+                        </td>
+                        <td>
+                            <input type="number" step="0.01"
+                                   th:name="'itens[' + ${iterStat.index} + '].quantidade'"
+                                   th:value="${item.quantidade}" required>
+                        </td>
+                        <td>
+                            <button type="button" class="btn-remove" onclick="this.closest('tr').remove()">✕</button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <button type="button" class="btn-add" onclick="adicionarIngrediente()">+ Adicionar Ingrediente</button>
+            </div>
+
+            <div class="btn-group">
+                <button type="submit" class="btn btn-submit">Salvar</button>
+                <button type="button" class="btn btn-cancel" onclick="history.back()">Cancelar</button>
+            </div>
+        </form>
+
+        <!-- Template oculto -->
+        <table style="display:none">
+            <tr id="ingrediente-template">
+                <td>
+                    <select name="itens[__index__].ingrediente.id" required>
+                        <option value="" disabled selected>Selecione</option>
+                        <option th:each="i : ${ingredientes}" th:value="${i.id}" th:text="${i.nome}"></option>
+                    </select>
+                </td>
+                <td>
+                    <input type="number" name="itens[__index__].quantidade" step="0.01" required>
+                </td>
+                <td>
+                    <button type="button" class="btn-remove" onclick="this.closest('tr').remove()">✕</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+</main>
+
+<script>
+    // identifica elementos
+    const tbody = document.getElementById('ingredientes-body');
+    const templateRow = document.getElementById('ingrediente-template'); // template oculto
+    // calcula índice inicial com base nas linhas existentes
+    let index = tbody ? tbody.querySelectorAll('tr').length : 0;
+
+    function adicionarIngrediente() {
+        if (!templateRow || !tbody) return;
+        const clone = templateRow.cloneNode(true);
+        clone.removeAttribute('id');
+        clone.style.display = '';
+        // substitui placeholder __index__ por índice atual
+        clone.innerHTML = clone.innerHTML.replace(/__index__/g, index);
+        tbody.appendChild(clone);
+        index++;
+        reindexarCampos();
+    }
+
+    // Remove linha passada e reindexa
+    function removerLinha(btn) {
+        const tr = btn.closest('tr');
+        if (tr) {
+            tr.remove();
+            index = Math.max(0, index - 1);
+            reindexarCampos();
+        }
+    }
+
+    // Atualiza nomes/th:name dos inputs/selects no tbody para índices sequenciais
+    function reindexarCampos() {
+        const rows = tbody.querySelectorAll('tr');
+        rows.forEach((row, i) => {
+            // inputs
+            row.querySelectorAll('input, select, textarea').forEach(el => {
+                // atualiza name se existir
+                if (el.name) {
+                    // substitui qualquer ocorrência de itens[<num>] por itens[i]
+                    el.name = el.name.replace(/itens\[\d+\]/, `itens[${i}]`);
+                }
+                // se usou th:name no template, após renderização o atributo 'name' já estará presente
+                // caso use data-name-template, podemos reconstruir:
+                if (!el.name && el.dataset && el.dataset.nameTemplate) {
+                    el.name = el.dataset.nameTemplate.replace(/__index__/g, i);
+                }
+            });
+        });
+        // atualiza index para próximo append correto
+        index = rows.length;
+    }
+
+    // Reindexa antes de enviar (opcional — garante consistência)
+    const form = document.querySelector('form[th\\:action], form[action]') || document.querySelector('form');
+    if (form) {
+        form.addEventListener('submit', () => {
+            reindexarCampos();
+        });
+    }
+
+    // Caso o template use botões com onclick inline, exponha a função globalmente
+    window.adicionarIngrediente = adicionarIngrediente;
+    window.removerLinha = removerLinha;
+
+    // Se o template oculto usa botões com onclick="this.closest('tr').remove()",
+    // substitua por onclick="removerLinha(this)" no template para manter reindexação
+</script>

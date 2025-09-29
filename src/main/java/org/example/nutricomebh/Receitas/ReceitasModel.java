@@ -30,15 +30,13 @@ public class ReceitasModel {
 
     @ManyToMany
     @JoinTable(
-            name = "ingredientes_receita",
+           name = "ingredientes_receita",
             joinColumns = @JoinColumn(name = "receita_id"),
-            inverseJoinColumns = @JoinColumn(name = "ingrediente_id")
-    )
+            inverseJoinColumns = @JoinColumn(name = "ingrediente_id"))
     private List<IngredienteModel> ingrediente;
 
-
-
-
+    @Column(name = "quantidade")
+    private List<Double> quantidade;
 
     @ManyToOne
     @JoinColumn(name = "categoria_id")

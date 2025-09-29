@@ -2,6 +2,9 @@ package org.example.nutricomebh.Ingrediente;
 
 
 import org.example.nutricomebh.Medidas.*;
+import org.example.nutricomebh.Receitas.ReceitasDTO;
+import org.example.nutricomebh.Receitas.ReceitasRepository;
+import org.example.nutricomebh.Receitas.ReceitasService;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -16,14 +19,18 @@ public class IngredienteService {
     private final MedidasRepository medidasRepository;
     private final MedidasMapper medidasMapper;
     private final MedidasService medidasService;
+    private final ReceitasService receitasService;
+    private final ReceitasRepository receitasRepository;
     private IngredienteRepository ingredienteRepository;
 
-    public IngredienteService(IngredienteRepository ingredienteRepository, IngredientesMapper ingredientesMapper, MedidasRepository medidasRepository, MedidasMapper medidasMapper, MedidasService medidasService) {
+    public IngredienteService(IngredienteRepository ingredienteRepository, IngredientesMapper ingredientesMapper, MedidasRepository medidasRepository, MedidasMapper medidasMapper, MedidasService medidasService, ReceitasService receitasService, ReceitasRepository receitasRepository) {
         this.ingredienteRepository = ingredienteRepository;
         this.ingredientesMapper = ingredientesMapper;
         this.medidasRepository = medidasRepository;
         this.medidasMapper = medidasMapper;
         this.medidasService = medidasService;
+        this.receitasService = receitasService;
+        this.receitasRepository = receitasRepository;
     }
 
     //Adicionar um ingrediente
@@ -67,5 +74,15 @@ public class IngredienteService {
     public void deletarIngrediente(Long id){
         ingredienteRepository.deleteById(id);
     }
+
+    //Listar ingredientes da receita escolhinda
+    public List<IngredientesDTO> listarIngredientesReceita(Long id){
+        ReceitasDTO receita = receitasService.listarReceitasPorId(id);
+        List <IngredienteModel> ingrediente = receita.getIngrediente();
+        return ingrediente.stream().
+                map(ingredientesMapper::mapIngrediente)
+                .collect(Collectors.toList());
+    }
+
 
 }

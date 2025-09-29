@@ -24,10 +24,4 @@ public class MedidasModel {
     @Column(name = "nome_medida")
     private String medida;
 
-
-    @OneToMany(mappedBy = "medidas")
-    @JsonIgnore
-    private List<IngredienteModel> ingredientes;
-
-
 }

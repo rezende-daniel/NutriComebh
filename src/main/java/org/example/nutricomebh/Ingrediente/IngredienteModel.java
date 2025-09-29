@@ -26,16 +26,9 @@ public class IngredienteModel {
     @Column(name = "nome")
     private String nome;
 
-    //cada ingredientem tem uma unica media
-    @ManyToOne
-    @JoinColumn(name = "medidas_id")
-    private MedidasModel medidas;
-
-
-
-
-
     @ManyToMany(mappedBy = "ingrediente")
     private List<ReceitasModel> receita;
+
+
 
 }
