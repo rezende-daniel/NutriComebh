@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.example.nutricomebh.Medidas.MedidasModel;
+import org.example.nutricomebh.Quantidade.QuantidadeModel;
 import org.example.nutricomebh.Receitas.ReceitasModel;
 
 import java.util.List;
@@ -30,5 +31,7 @@ public class IngredienteModel {
     private List<ReceitasModel> receita;
 
 
+    @OneToMany(mappedBy = "ingrediente")
+    private List<QuantidadeModel> quantidade;
 
 }
