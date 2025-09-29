@@ -1,11 +1,9 @@
 package org.example.nutricomebh.Receitas;
 
 
-import org.example.nutricomebh.Ingrediente.IngredienteModel;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
+
 
 @Component
 public class ReceitasMapper {
@@ -16,7 +14,6 @@ public class ReceitasMapper {
         receitasModel.setNome(receitasDTO.getNome());
         receitasModel.setPreparo(receitasDTO.getPreparo());
         receitasModel.setIngrediente(receitasDTO.getIngrediente());
-        receitasModel.setQuantidade(receitasDTO.getQuantidade());
         return receitasModel;
     }
     public ReceitasDTO mapReceitas(ReceitasModel receitasModel){
@@ -26,7 +23,6 @@ public class ReceitasMapper {
         receitasDTO.setNome(receitasModel.getNome());
         receitasDTO.setPreparo(receitasModel.getPreparo());
         receitasDTO.setIngrediente(receitasModel.getIngrediente());
-        receitasDTO.setQuantidade(receitasModel.getQuantidade());
         return receitasDTO;
     }
 
