@@ -7,7 +7,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.example.nutricomebh.Ingrediente.IngredienteModel;
+import org.example.nutricomebh.ItemReceita.ItemModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -18,10 +20,12 @@ import java.util.List;
 public class MedidasModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
+    @Column(name = "medida_id")
     private Long id;
 
     @Column(name = "nome_medida")
     private String medida;
 
+    @OneToMany(mappedBy = "medida")
+    private List<ItemModel> item;
 }

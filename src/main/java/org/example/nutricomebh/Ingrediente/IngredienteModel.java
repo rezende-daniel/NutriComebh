@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.example.nutricomebh.ItemReceita.ItemModel;
 import org.example.nutricomebh.Medidas.MedidasModel;
 import org.example.nutricomebh.Quantidade.QuantidadeModel;
 import org.example.nutricomebh.Receitas.ReceitasModel;
@@ -27,11 +28,14 @@ public class IngredienteModel {
     @Column(name = "nome")
     private String nome;
 
-    @ManyToMany(mappedBy = "ingrediente")
-    private List<ReceitasModel> receita;
+    //@ManyToMany(mappedBy = "ingrediente")
+    //private List<ReceitasModel> receita;
 
+
+    //@OneToMany(mappedBy = "ingrediente")
+    //private List<QuantidadeModel> quantidade;
 
     @OneToMany(mappedBy = "ingrediente")
-    private List<QuantidadeModel> quantidade;
+    private List<ItemModel> item;
 
 }

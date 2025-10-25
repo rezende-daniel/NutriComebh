@@ -10,12 +10,14 @@ public class QuantidadeMapper {
         QuantidadeModel quantidadeModel = new QuantidadeModel();
         quantidadeModel.setId(quantidadeDTO.getId());
         quantidadeModel.setQuantidade(quantidadeDTO.getQuantidade());
+        quantidadeModel.setItem(quantidadeDTO.getItem());
         return quantidadeModel;
     }
     public QuantidadeDTO mapQuantidade(QuantidadeModel quantidadeModel) {
         QuantidadeDTO quantidadeDTO = new QuantidadeDTO();
         quantidadeDTO.setId(quantidadeModel.getId());
         quantidadeDTO.setQuantidade(quantidadeModel.getQuantidade());
+        quantidadeDTO.setItem(quantidadeModel.getItem());
         return quantidadeDTO;
     }
 }

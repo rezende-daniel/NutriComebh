@@ -3,189 +3,95 @@
 <head>
     <meta charset="UTF-8">
     <title>Adicionar Receita</title>
-    <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: #f0f4f8;
-            padding: 2rem;
-        }
-        h2 {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-        form {
-            max-width: 800px;
-            margin: auto;
-            background: #fff;
-            padding: 2rem;
-            border-radius: 12px;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.05);
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-        label {
-            font-weight: 500;
-        }
-        input, textarea, select {
-            padding: 0.75rem;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            font-size: 1rem;
-            width: 100%;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 1rem;
-        }
-        th, td {
-            padding: 0.75rem;
-            border-bottom: 1px solid #eee;
-        }
-        .btn {
-            padding: 0.75rem;
-            border: none;
-            border-radius: 50px;
-            font-weight: 500;
-            cursor: pointer;
-        }
-        .btn-add {
-            background: #2196F3;
-            color: #fff;
-            margin-top: 0.5rem;
-        }
-        .btn-remove {
-            background: #e57373;
-            color: #fff;
-            border: none;
-            border-radius: 50%;
-            width: 1.75rem;
-            height: 1.75rem;
-            font-size: 1rem;
-            cursor: pointer;
-        }
-        .btn-submit {
-            background: linear-gradient(90deg, #43cea2, #185a9d);
-            color: #fff;
-        }
-    </style>
+   <!-- <script th:inline="javascript">
+        const ingredientes = /*[[${listaIngredientes}]]*/ [];
+        const medidas = /*[[${listaMedidas}]]*/ [];
+    </script>-->
 </head>
 <body>
+
 <h2>Adicionar Receita</h2>
-<form th:action="@{/receita/ui/adicionarReceitaBd}" th:object="${receitas}" method="post">
-    <div>
-        <label for="nome">Nome da Receita</label>
-        <input type="text" id="nome" th:field="*{nome}" required>
-    </div>
 
-    <div>
-        <label for="preparo">Modo de Preparo</label>
-        <textarea id="preparo" th:field="*{preparo}" rows="4" required></textarea>
-    </div>
+<form id="form-receita" th:action="@{adicionarReceitaBd}" th:object="${receitas}" method="post">
+    <label>Nome da Receita</label>
+    <input type="text" th:field="*{nome}" required>
 
-    <div>
-        <label for="categoria">Categoria</label>
-        <select id="categoria" th:field="*{categoria.id}" required>
-            <option value="" disabled selected>Selecione</option>
-            <option th:each="c : ${listaCategoria}" th:value="${c.id}" th:text="${c.nome}"></option>
-        </select>
-    </div>
+    <label>Modo de Preparo</label>
+    <textarea th:field="*{preparo}" rows="4" required></textarea>
 
-    <div>
-        <label>Ingredientes</label>
-        <table>
-            <thead>
-            <tr>
-                <th>Ingrediente</th>
-                <th>Medida</th>
-                <th>Quantidade</th>
-                <th></th>
-            </tr>
-            </thead>
-            <tbody id="ingredientes-body">
-            <tr th:each="item, iterStat : ${listaIngredientes}">
-                <td>
-                    <select th:name="'itens[' + ${iterStat.index} + '].ingrediente.id'" required>
-                        <option th:each="i : ${listaIngredientes}" th:value="${i.id}" th:text="${i.nome}"
-                                th:selected="${i.id == item.id}"></option>
-                    </select>
-                </td>
-                <td>
-                    <select th:name="'itens[' + ${iterStat.index} + '].medida.id'" required>
-                        <option th:each="m : ${listaMedidas}" th:value="${m.id}" th:text="${m.medida}"
-                                th:selected="${m.id == item.id}"></option>
-                    </select>
-                </td>
-                <td>
-                    <input type="number" step="0,1"
-                           th:name="'itens[' + ${iterStat.index} + '].quantidade'"
-                           th:value="${receitas.quantidade}" required>
-                </td>
-                <td>
-                    <button type="button" class="btn-remove" onclick="removerLinha(this)">✕</button>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-        <button type="button" class="btn btn-add" onclick="adicionarIngrediente()">+ Adicionar Ingrediente</button>
-    </div>
+    <label>Categoria</label>
+    <select th:field="*{categoria.id}" required>
+        <option value="">-- selecione --</option>
+        <option th:each="c : ${listaCategoria}" th:value="${c.id}" th:text="${c.nome}"></option>
+    </select>
 
-    <button type="submit" class="btn btn-submit">Salvar Receita</button>
+    <h3>Ingredientes</h3>
+    <button type="button" onclick="adicionarIngrediente()">+ Adicionar Ingrediente</button>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Ingrediente</th>
+            <th>Medida</th>
+            <th>Quantidade</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody id="ingredientes-body"></tbody>
+    </table>
+
+    <button type="submit">Salvar Receita</button>
 </form>
-
-<!-- Template oculto -->
-<table style="display:none">
-    <tr id="ingrediente-template">
-        <td>
-            <select name="itens[__index__].ingrediente.id" required>
-                <option value="" disabled selected>Selecione</option>
-                <option th:each="i : ${listaIngredientes}" th:value="${i.id}" th:text="${i.nome}"></option>
-            </select>
-        </td>
-        <td>
-            <select name="itens[__index__].medida.id" required>
-                <option value="" disabled selected>Selecione</option>
-                <option th:each="m : ${listaMedidas}" th:value="${m.id}" th:text="${m.medida}"></option>
-            </select>
-        </td>
-        <td>
-            <input type="number" name="itens[__index__].quantidade" step="0.1" required>
-        </td>
-        <td>
-            <button type="button" class="btn-remove" onclick="removerLinha(this)">✕</button>
-        </td>
-    </tr>
-</table>
 
 <script>
     const tbody = document.getElementById('ingredientes-body');
-    const templateRow = document.getElementById('ingrediente-template');
-    let index = tbody ? tbody.querySelectorAll('tr').length : 0;
+    let index = 0;
 
     function adicionarIngrediente() {
-        const clone = templateRow.cloneNode(true);
-        clone.removeAttribute('id');
-        clone.style.display = '';
-        clone.innerHTML = clone.innerHTML.replace(/__index__/g, index);
-        tbody.appendChild(clone);
+        const row = document.createElement('tr');
+
+        const ingredienteOptions = ingredientes.map(i =>
+            `<option value="${i.id}">${i.nome}</option>`
+        ).join('');
+
+        const medidaOptions = medidas.map(m =>
+            `<option value="${m.id}">${m.medida}</option>`
+        ).join('');
+
+        row.innerHTML = `
+      <td>
+        <select name="itens[${index}].ingrediente.id" required>
+          <option value="">-- selecione --</option>
+          ${ingredienteOptions}
+        </select>
+      </td>
+      <td>
+        <select name="itens[${index}].medida.id" required>
+          <option value="">-- selecione --</option>
+          ${medidaOptions}
+        </select>
+      </td>
+      <td>
+        <input type="number" name="itens[${index}].quantidade" step="0.01" required>
+      </td>
+      <td>
+        <button type="button" onclick="removerLinha(this)">✕</button>
+      </td>
+    `;
+
+        tbody.appendChild(row);
         index++;
-        reindexarCampos();
     }
 
     function removerLinha(btn) {
-        const tr = btn.closest('tr');
-        if (tr) {
-            tr.remove();
-            index = Math.max(0, index - 1);
-            reindexarCampos();
-        }
+        btn.closest('tr').remove();
+        reindexarCampos();
     }
 
     function reindexarCampos() {
         const rows = tbody.querySelectorAll('tr');
         rows.forEach((row, i) => {
-            row.querySelectorAll('select, input').forEach(el => {
+            row.querySelectorAll('input, select').forEach(el => {
                 if (el.name) {
                     el.name = el.name.replace(/itens\[\d+\]/, `itens[${i}]`);
                 }
@@ -193,6 +99,11 @@
         });
         index = rows.length;
     }
+
+    document.getElementById('form-receita').addEventListener('submit', () => {
+        reindexarCampos();
+    });
 </script>
+
 </body>
 </html>

@@ -1,6 +1,9 @@
 package org.example.nutricomebh.Ingrediente;
 
 
+import org.example.nutricomebh.ItemReceita.ItemDTO;
+import org.example.nutricomebh.ItemReceita.ItemMapper;
+import org.example.nutricomebh.ItemReceita.ItemModel;
 import org.example.nutricomebh.Medidas.*;
 import org.example.nutricomebh.Receitas.ReceitasDTO;
 import org.example.nutricomebh.Receitas.ReceitasRepository;
@@ -22,8 +25,9 @@ public class IngredienteService {
     private final ReceitasService receitasService;
     private final ReceitasRepository receitasRepository;
     private IngredienteRepository ingredienteRepository;
+    private final ItemMapper itemMapper;
 
-    public IngredienteService(IngredienteRepository ingredienteRepository, IngredientesMapper ingredientesMapper, MedidasRepository medidasRepository, MedidasMapper medidasMapper, MedidasService medidasService, ReceitasService receitasService, ReceitasRepository receitasRepository) {
+    public IngredienteService(IngredienteRepository ingredienteRepository, IngredientesMapper ingredientesMapper, MedidasRepository medidasRepository, MedidasMapper medidasMapper, MedidasService medidasService, ReceitasService receitasService, ReceitasRepository receitasRepository, ItemMapper itemMapper) {
         this.ingredienteRepository = ingredienteRepository;
         this.ingredientesMapper = ingredientesMapper;
         this.medidasRepository = medidasRepository;
@@ -31,6 +35,7 @@ public class IngredienteService {
         this.medidasService = medidasService;
         this.receitasService = receitasService;
         this.receitasRepository = receitasRepository;
+        this.itemMapper = itemMapper;
     }
 
     //Adicionar um ingrediente
@@ -76,11 +81,11 @@ public class IngredienteService {
     }
 
     //Listar ingredientes da receita escolhinda
-    public List<IngredientesDTO> listarIngredientesReceita(Long id){
+    public List<ItemDTO> listarIngredientesReceita(Long id){
         ReceitasDTO receita = receitasService.listarReceitasPorId(id);
-        List <IngredienteModel> ingrediente = receita.getIngrediente();
+        List <ItemModel> ingrediente = receita.getItens();
         return ingrediente.stream().
-                map(ingredientesMapper::mapIngrediente)
+                map(itemMapper::mapitem)
                 .collect(Collectors.toList());
     }
 

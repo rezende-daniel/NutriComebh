@@ -6,6 +6,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.example.nutricomebh.Ingrediente.IngredienteModel;
+import org.example.nutricomebh.ItemReceita.ItemModel;
+
+import java.util.List;
 
 @Entity
 @Table(name = "tb_quantidade")
@@ -18,9 +21,12 @@ public class QuantidadeModel {
     private Long id;
 
     @Column(name = "quantidade")
-    private long quantidade;
+    private double quantidade;
 
-    @ManyToOne
-    @JoinColumn(name = "ingrediente_id")
-    private IngredienteModel ingrediente;
+    //@ManyToOne
+    //@JoinColumn(name = "ingrediente_id")
+    //private IngredienteModel ingrediente;
+
+    @OneToOne
+    private ItemModel item;
 }

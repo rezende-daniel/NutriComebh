@@ -4,6 +4,11 @@ package org.example.nutricomebh.Receitas;
 import org.example.nutricomebh.Ingrediente.IngredienteModel;
 import org.example.nutricomebh.Ingrediente.IngredientesDTO;
 import org.example.nutricomebh.Ingrediente.IngredientesMapper;
+import org.example.nutricomebh.ItemReceita.ItemDTO;
+import org.example.nutricomebh.ItemReceita.ItemMapper;
+import org.example.nutricomebh.ItemReceita.ItemModel;
+import org.example.nutricomebh.ItemReceita.ItemRepository;
+import org.example.nutricomebh.Quantidade.QuantidadeDTO;
 import org.springframework.stereotype.Service;
 
 import java.io.Serial;
@@ -16,12 +21,14 @@ public class ReceitasService {
     private final ReceitasMapper receitasMapper;
     private final IngredientesMapper ingredientesMapper;
     private final ReceitasRepository receitasRepository;
-
-
-    public ReceitasService(ReceitasRepository receitasRepository, ReceitasMapper receitasMapper, IngredientesMapper ingredientesMapper) {
+    private final ItemMapper itemMapper;
+    private final ItemRepository itemRepository;
+    public ReceitasService(ReceitasRepository receitasRepository, ReceitasMapper receitasMapper, IngredientesMapper ingredientesMapper, ItemRepository itemRepository, ItemMapper itemMapper, ItemRepository itemRepository1) {
         this.receitasRepository = receitasRepository;
         this.receitasMapper = receitasMapper;
         this.ingredientesMapper = ingredientesMapper;
+        this.itemMapper = itemMapper;
+        this.itemRepository = itemRepository1;
     }
 
     //listar todas as receitas
@@ -40,6 +47,15 @@ public class ReceitasService {
     public ReceitasDTO criarReceita(ReceitasDTO receitasDTO) {
         ReceitasModel receitaNova = receitasMapper.mapReceitas(receitasDTO);
         receitaNova = receitasRepository.save(receitaNova);
+
+
+        for (ItemModel itemDTO : receitasDTO.getItens()) {
+            ItemDTO itemModel = itemMapper.mapitem(itemDTO);
+            itemModel.setReceita(receitaNova); // vincula à receita principal
+            itemRepository.save(itemDTO);
+
+        }
+
         return receitasMapper.mapReceitas(receitaNova);
     }
     //Deletar receita

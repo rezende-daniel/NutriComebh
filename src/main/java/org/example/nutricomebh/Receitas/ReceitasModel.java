@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.example.nutricomebh.Categoria.CategoriaModel;
 import org.example.nutricomebh.Ingrediente.IngredienteModel;
+import org.example.nutricomebh.ItemReceita.ItemModel;
 import org.example.nutricomebh.Medidas.MedidasModel;
 import org.example.nutricomebh.Quantidade.QuantidadeModel;
 import org.hibernate.annotations.Cascade;
@@ -30,14 +31,9 @@ public class ReceitasModel {
     @Column(name = "preparo")
     private String preparo;
 
-    @ManyToMany
-    @JoinTable(
-           name = "ingredientes_receita",
-            joinColumns = @JoinColumn(name = "receita_id"),
-            inverseJoinColumns = @JoinColumn(name = "ingrediente_id"))
-    private List<IngredienteModel> ingrediente;
 
-
+    @OneToMany(mappedBy = "receita")
+    private List<ItemModel> itens;
 
 
     @ManyToOne

@@ -21,7 +21,7 @@ public class ReceitasController {
 
     //Adiciona receita
     @PostMapping("/criaReceita")
-    public ResponseEntity<String> criaReceita(@RequestBody ReceitasDTO receitas){
+    public ResponseEntity<String> criaReceita(@RequestBody ReceitasDTO receitas,@RequestBody List< IngredientesDTO> ingredientes){
 
         ReceitasDTO novaReceita = receitasService.criarReceita(receitas);
         return ResponseEntity.status(HttpStatus.CREATED).body(novaReceita.toString());
