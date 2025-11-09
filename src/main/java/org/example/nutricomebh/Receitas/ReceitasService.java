@@ -12,6 +12,7 @@ import org.example.nutricomebh.Quantidade.QuantidadeDTO;
 import org.springframework.stereotype.Service;
 
 import java.io.Serial;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -47,15 +48,22 @@ public class ReceitasService {
     public ReceitasDTO criarReceita(ReceitasDTO receitasDTO) {
         ReceitasModel receitaNova = receitasMapper.mapReceitas(receitasDTO);
         receitaNova = receitasRepository.save(receitaNova);
+        Long idReceita = receitaNova.getId();
+        System.out.println(receitaNova+" fora do for");
+        List<ItemModel> itens = new ArrayList<>();
+        for (ItemModel item : receitasDTO.getItens()) {
 
-
-        for (ItemModel itemDTO : receitasDTO.getItens()) {
-            ItemDTO itemModel = itemMapper.mapitem(itemDTO);
-            itemModel.setReceita(receitaNova); // vincula à receita principal
-            itemRepository.save(itemDTO);
-
+            item.setReceita(receitaNova); // vincula à receita principal
+            itemRepository.save(item);
+            itens.add(item);
+            System.out.println(itens+ " dentro do for");
         }
 
+        System.out.println(itens);
+        receitaNova.setItens((itens));
+        receitaNova.setId(idReceita);
+        System.out.println(receitaNova+" fora do for2");
+        //receitasRepository.save(receitaNova);
         return receitasMapper.mapReceitas(receitaNova);
     }
     //Deletar receita
@@ -72,4 +80,5 @@ public class ReceitasService {
             return receitasMapper.mapReceitas(receitaModificado);
         }return  null;
     }
+
 }

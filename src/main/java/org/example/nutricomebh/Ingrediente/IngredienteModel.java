@@ -1,9 +1,11 @@
 package org.example.nutricomebh.Ingrediente;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.example.nutricomebh.ItemReceita.ItemModel;
 import org.example.nutricomebh.Medidas.MedidasModel;
 import org.example.nutricomebh.Quantidade.QuantidadeModel;
@@ -18,6 +20,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@ToString(exclude = {"item"})
 public class IngredienteModel {
 
     @Id
@@ -35,7 +38,8 @@ public class IngredienteModel {
     //@OneToMany(mappedBy = "ingrediente")
     //private List<QuantidadeModel> quantidade;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "ingrediente")
-    private List<ItemModel> item;
+    private List<ItemModel> itens;
 
 }

@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import org.example.nutricomebh.Ingrediente.IngredienteModel;
 import org.example.nutricomebh.ItemReceita.ItemModel;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
@@ -21,7 +22,7 @@ public class QuantidadeModel {
     private Long id;
 
     @Column(name = "quantidade")
-    private double quantidade;
+    private BigDecimal quantidade;
 
     //@ManyToOne
     //@JoinColumn(name = "ingrediente_id")

@@ -12,6 +12,7 @@ import org.example.nutricomebh.Medidas.MedidasModel;
 import org.example.nutricomebh.Quantidade.QuantidadeModel;
 import org.hibernate.annotations.Cascade;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -32,8 +33,9 @@ public class ReceitasModel {
     private String preparo;
 
 
-    @OneToMany(mappedBy = "receita")
-    private List<ItemModel> itens;
+    @OneToMany(mappedBy = "receita", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ItemModel> itens = new ArrayList<>();
+
 
 
     @ManyToOne

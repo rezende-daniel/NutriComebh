@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <title>Adicionar Receita</title>
-   <!-- <script th:inline="javascript">
+    <script th:inline="javascript">
         const ingredientes = /*[[${listaIngredientes}]]*/ [];
-        const medidas = /*[[${listaMedidas}]]*/ [];
-    </script>-->
+        const medidas = /*[[${ListarMedidas}]]*/ [];
+    </script>
 </head>
 <body>
 
 <h2>Adicionar Receita</h2>
 
-<form id="form-receita" th:action="@{adicionarReceitaBd}" th:object="${receitas}" method="post">
+<form id="form-receita" th:action="@{/receita/ui/adicionarReceitaBd}" th:object="${receita}" method="post">
     <label>Nome da Receita</label>
     <input type="text" th:field="*{nome}" required>
 

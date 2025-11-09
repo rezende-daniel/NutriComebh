@@ -22,8 +22,8 @@ public class ReceitasDTO {
     private Long id;
     private String nome;
     private String preparo;
-    private CategoriaModel categoria;
-    private List<ItemModel> itens;
+    private CategoriaModel categoria = new CategoriaModel();
+    private List<ItemModel> itens=new ArrayList<>();
 
 
 }

@@ -9,6 +9,8 @@ import org.example.nutricomebh.Medidas.MedidasModel;
 import org.example.nutricomebh.Quantidade.QuantidadeModel;
 import org.example.nutricomebh.Receitas.ReceitasModel;
 
+import java.math.BigDecimal;
+
 
 @Data
 @AllArgsConstructor
@@ -17,6 +19,6 @@ public class ItemDTO {
     private long id;
     private IngredienteModel ingrediente;
     private MedidasModel medida;
-    private QuantidadeModel quantidade;
+    private BigDecimal quantidade;
     private ReceitasModel receita;
 }

@@ -16,7 +16,7 @@ public class IngredientesMapper {
         ingredienteModel.setNome(ingredientesDTO.getNome());
         //ingredienteModel.setReceita(ingredientesDTO.getReceita());
         //ingredienteModel.setQuantidade(ingredientesDTO.getQuantidade());
-        ingredienteModel.setItem(ingredientesDTO.getItem());
+        ingredienteModel.setItens(ingredientesDTO.getItem());
         return ingredienteModel;
     }
 
@@ -26,7 +26,7 @@ public class IngredientesMapper {
         ingredientesDTO.setNome(ingredienteModel.getNome());
         //ingredientesDTO.setReceita(ingredienteModel.getReceita());
         //ingredientesDTO.setQuantidade(ingredienteModel.getQuantidade());
-        ingredientesDTO.setItem(ingredienteModel.getItem());
+        ingredientesDTO.setItem(ingredienteModel.getItens());
         return ingredientesDTO;
     }
 
