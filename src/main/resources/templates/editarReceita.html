@@ -90,7 +90,7 @@
     <input type="text" th:field="*{nome}" required>
 
     <label>Modo de Preparo</label>
-    <textarea th:field="*{preparo}" rows="4" required></textarea>
+    <textarea th:field="*{preparo}" rows="1" required></textarea>
 
     <label>Categoria</label>
     <select th:field="*{categoria.id}" required>
@@ -112,11 +112,11 @@
         <tbody>
         <tr th:each="item, iStat : *{itens}">
             <td>
-                <select th:name="'itens[' + ${iStat.index} + '].ingrediente.id'" required>
-                    <option value="">-- selecione --</option>
-                    <option th:each="ing : ${receita.itens}" th:value="${ing.id}" th:text="${ing.ingrediente}"
+                <h4 th:name="'itens[' + ${iStat.index} + '].ingrediente.id'" required>
+
+                    <option th:each="ing : ${receita.itens}" th:value="${ing.id}" th:text="${ing.ingrediente.nome}"
                             th:selected="${ing.id} == ${item.ingrediente.id}"></option>
-                </select>
+                </h4>
             </td>
             <td>
                 <select th:name="'itens[' + ${iStat.index} + '].medida.id'" required>
@@ -127,7 +127,7 @@
             </td>
             <td>
                 <input type="number" th:name="'itens[' + ${iStat.index} + '].quantidade'"
-                       th:value="${item.quantidade}" step="0.01" required>
+                       th:value="${item.quantidade}" step="0.1" required>
             </td>
             <td>
                 <button type="button" class="remove-btn" onclick="removerLinha(this)">✕</button>

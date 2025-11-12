@@ -39,9 +39,10 @@ public class ReceitasController {
     }
     //Procura receita por ID
     @GetMapping("/procurarReceitaPorId/{id}")
-    private ResponseEntity<?> procurarReceitaPorId(@RequestParam Long id){
+    private ResponseEntity<?> procurarReceitaPorId(@PathVariable Long id){
         if (receitasService.listarReceitasPorId(id) != null){
             receitasService.listarReceitasPorId(id);
+
             return ResponseEntity.status(HttpStatus.OK).body(receitasService.listarReceitasPorId(id));
         } else  {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Receita inexistente");

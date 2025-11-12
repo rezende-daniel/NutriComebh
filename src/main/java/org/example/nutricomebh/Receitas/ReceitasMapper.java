@@ -24,10 +24,11 @@ public class ReceitasMapper {
             itemModel.setIngrediente(itemDTO.getIngrediente());
             itemModel.setMedida(itemDTO.getMedida());
             itemModel.setQuantidade(itemDTO.getQuantidade());
-            itemModel.setReceita(receitasModel);
+            itemModel.setReceita(itemDTO.getReceita());
             return itemModel;
         })
                 .toList();
+        receitasModel.setItens(receitasDTO.getItens());
         return receitasModel;
     }
     public ReceitasDTO mapReceitas(ReceitasModel receitasModel){
@@ -46,6 +47,7 @@ public class ReceitasMapper {
             itemDTO.setReceita(itemModel.getReceita());
             return itemDTO;
         }).toList();
+        receitasDTO.setItens(receitasModel.getItens());
         return receitasDTO;
     }
 

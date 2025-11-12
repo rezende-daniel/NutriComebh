@@ -26,14 +26,16 @@ public class ItemModel {
     @Column(name = "item_id")
     private long id;
 
-    @JsonIgnore
+
     @ManyToOne
     @JoinColumn(name = "ingrediente_id")
+    @JsonIgnore
     private IngredienteModel ingrediente;
 
-    @JsonIgnore
+
     @ManyToOne
     @JoinColumn(name = "medida_id")
+    @JsonIgnore
     private MedidasModel medida;
 
     @Column(name = "quantidade")

@@ -4,10 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.example.nutricomebh.Categoria.CategoriaModel;
-import org.example.nutricomebh.Ingrediente.IngredienteModel;
+import org.example.nutricomebh.ItemReceita.ItemDTO;
 import org.example.nutricomebh.ItemReceita.ItemModel;
-import org.example.nutricomebh.Medidas.MedidasModel;
-import org.example.nutricomebh.Quantidade.QuantidadeModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +22,7 @@ public class ReceitasDTO {
     private String preparo;
     private CategoriaModel categoria = new CategoriaModel();
     private List<ItemModel> itens=new ArrayList<>();
+
 
 
 }

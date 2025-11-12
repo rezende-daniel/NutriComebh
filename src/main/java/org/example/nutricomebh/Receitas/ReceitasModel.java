@@ -1,6 +1,7 @@
 package org.example.nutricomebh.Receitas;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -34,6 +35,7 @@ public class ReceitasModel {
 
 
     @OneToMany(mappedBy = "receita", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<ItemModel> itens = new ArrayList<>();
 
 

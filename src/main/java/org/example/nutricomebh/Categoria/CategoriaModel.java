@@ -1,6 +1,7 @@
 package org.example.nutricomebh.Categoria;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,7 +25,7 @@ public class CategoriaModel {
     @Column(name = "nome_categoria")
     private String nome;
 
-
+    @JsonIgnore
     @OneToMany(mappedBy = "categoria")
     private List<ReceitasModel> receitas;
 
