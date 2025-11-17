@@ -11,6 +11,7 @@ import java.util.List;
 public class CardapioMapper {
     public CardapioModel mapCardapio(CardapioDTO cardapioDTO){
         CardapioModel cardapioModel = new CardapioModel();
+        cardapioModel.setNumeroPessoas(cardapioDTO.getNumeroPessoas());
         cardapioModel.setId(cardapioDTO.getId());
         List<ReceitasModel> receitas1Model = cardapioDTO.getDiaUm().stream()
                 .map(receitaDto ->{
@@ -52,8 +53,9 @@ public class CardapioMapper {
     }
     public CardapioDTO mapCardapio(CardapioModel cardapioModel){
         CardapioDTO cardapioDTO = new CardapioDTO();
+        cardapioDTO.setNumeroPessoas(cardapioModel.getNumeroPessoas());
         cardapioDTO.setId(cardapioModel.getId());
-        List<ReceitasDTO> receitasDTO = cardapioModel.getDiaUm().stream()
+        List<ReceitasDTO> receitas1DTO = cardapioModel.getDiaUm().stream()
                 .map(receitasModel -> {
                     ReceitasDTO receitaDTO =new ReceitasDTO();
                     receitaDTO.setId(receitasModel.getId());
@@ -62,9 +64,33 @@ public class CardapioMapper {
                     return  receitaDTO;
                 }).toList();
         cardapioDTO.setDiaUm(cardapioModel.getDiaUm());
+        List<ReceitasDTO> receitas2DTO = cardapioModel.getDiaDois().stream()
+                .map(receitasModel -> {
+                    ReceitasDTO receitaDTO =new ReceitasDTO();
+                    receitaDTO.setId(receitasModel.getId());
+                    receitaDTO.setNome(receitasModel.getNome());
+                    receitaDTO.setCategoria(receitasModel.getCategoria());
+                    return  receitaDTO;
+                }).toList();
         cardapioDTO.setDiaDois(cardapioModel.getDiaDois());
+        List<ReceitasDTO> receitas3DTO = cardapioModel.getDiaTreis() .stream()
+                .map(receitasModel -> {
+                    ReceitasDTO receitaDTO =new ReceitasDTO();
+                    receitaDTO.setId(receitasModel.getId());
+                    receitaDTO.setNome(receitasModel.getNome());
+                    receitaDTO.setCategoria(receitasModel.getCategoria());
+                    return  receitaDTO;
+                }).toList();
         cardapioDTO.setDiaTreis(cardapioModel.getDiaTreis());
         cardapioDTO.setDiaQuatro(cardapioModel.getDiaQuatro());
+        List<ReceitasDTO> receitas4DTO = cardapioModel.getDiaQuatro().stream()
+                .map(receitasModel -> {
+                    ReceitasDTO receitaDTO =new ReceitasDTO();
+                    receitaDTO.setId(receitasModel.getId());
+                    receitaDTO.setNome(receitasModel.getNome());
+                    receitaDTO.setCategoria(receitasModel.getCategoria());
+                    return  receitaDTO;
+                }).toList();
         return cardapioDTO;
     }
 }

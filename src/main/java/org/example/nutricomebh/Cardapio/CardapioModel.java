@@ -34,4 +34,7 @@ public class CardapioModel {
     @ManyToMany
     @Column(name = "dia_quatro")
     private List<ReceitasModel> diaQuatro = new ArrayList<>();
+
+    @Column(name = "numero_pessoas")
+    private Integer numeroPessoas;
 }

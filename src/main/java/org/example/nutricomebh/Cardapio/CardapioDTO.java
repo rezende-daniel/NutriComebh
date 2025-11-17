@@ -25,4 +25,7 @@ public class CardapioDTO {
     private List<ReceitasModel> diaTreis = new ArrayList<>();
 
     private List<ReceitasModel> diaQuatro = new ArrayList<>();
+
+    private Integer numeroPessoas;
+
 }

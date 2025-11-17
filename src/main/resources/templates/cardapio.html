@@ -10,7 +10,11 @@
 <h2>Cardápio da Semana</h2>
 
 <form th:action="@{/cardapio/salvar}" th:object="${cardapio}" method="post">
-    <table>
+    <div style="margin-bottom: 20px;">
+        <label for="numeroPessoas"><strong>Número de Pessoas:</strong></label>
+        <input type="number" id="numeroPessoas" th:field="*{numeroPessoas}" min="1" placeholder="Digite a quantidade"/>
+    </div>
+        <table>
         <thead>
         <tr>
             <th>Dia</th>
