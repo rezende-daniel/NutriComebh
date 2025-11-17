@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Cardápio da Semana</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<h2>Cardápio da Semana</h2>
+
+<form th:action="@{/cardapio/salvar}" th:object="${cardapio}" method="post">
+    <table>
+        <thead>
+        <tr>
+            <th>Dia</th>
+            <th>Café da Manhã</th>
+            <th>Lanche da Manhã</th>
+            <th>Almoço</th>
+            <th>Café da Tarde</th>
+            <th>Janta</th>
+            <th>Ceia</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <!-- Dia 1 -->
+        <tr>
+            <td>Dia 1</td>
+            <td><div><select name="diaUm"><option value="">-- selecione --</option><option th:each="r : ${lanche}" th:value="${r.id}" th:text="${r.nome}"></option></select></div><button type="button" onclick="adicionarSelect(this,'diaUmReceitas')">+ Receita</button></td>
+            <td><div><select name="diaUm"><option value="">-- selecione --</option><option th:each="r : ${lanche}" th:value="${r.id}" th:text="${r.nome}"></option></select></div><button type="button" onclick="adicionarSelect(this,'diaUmReceitas')">+ Receita</button></td>
+            <td><div><select name="diaUm"><option value="">-- selecione --</option><option th:each="r : ${refeicao}" th:value="${r.id}" th:text="${r.nome}"></option></select></div><button type="button" onclick="adicionarSelect(this,'diaUmReceitas')">+ Receita</button></td>
+            <td><div><select name="diaUm"><option value="">-- selecione --</option><option th:each="r : ${lanche}" th:value="${r.id}" th:text="${r.nome}"></option></select></div><button type="button" onclick="adicionarSelect(this,'diaUmReceitas')">+ Receita</button></td>
+            <td><div><select name="diaUm"><option value="">-- selecione --</option><option th:each="r : ${refeicao}" th:value="${r.id}" th:text="${r.nome}"></option></select></div><button type="button" onclick="adicionarSelect(this,'diaUmReceitas')">+ Receita</button></td>
+            <td><div><select name="diaUm"><option value="">-- selecione --</option><option th:each="r : ${lanche}" th:value="${r.id}" th:text="${r.nome}"></option></select></div><button type="button" onclick="adicionarSelect(this,'diaUmReceitas')">+ Receita</button></td>
+        </tr>
+
+        <!-- Dia 2 -->
+        <tr>
+            <td>Dia 2</td>
+
+            <td><div><select name="diaDois"><option value="">-- selecione --</option><option th:each="r : ${lanche}" th:value="${r.id}" th:text="${r.nome}"></option></select></div><button type="button" onclick="adicionarSelect(this,'diaDoisReceitas')">+ Receita</button></td>
+            <td><div><select name="diaDois"><option value="">-- selecione --</option><option th:each="r : ${lanche}" th:value="${r.id}" th:text="${r.nome}"></option></select></div><button type="button" onclick="adicionarSelect(this,'diaUmReceitas')">+ Receita</button></td>
+            <td><div><select name="diaDois"><option value="">-- selecione --</option><option th:each="r : ${refeicao}" th:value="${r.id}" th:text="${r.nome}"></option></select></div><button type="button" onclick="adicionarSelect(this,'diaUmReceitas')">+ Receita</button></td>
+            <td><div><select name="diaDois"><option value="">-- selecione --</option><option th:each="r : ${lanche}" th:value="${r.id}" th:text="${r.nome}"></option></select></div><button type="button" onclick="adicionarSelect(this,'diaUmReceitas')">+ Receita</button></td>
+            <td><div><select name="diaDois"><option value="">-- selecione --</option><option th:each="r : ${refeicao}" th:value="${r.id}" th:text="${r.nome}"></option></select></div><button type="button" onclick="adicionarSelect(this,'diaUmReceitas')">+ Receita</button></td>
+            <td><div><select name="diaDois"><option value="">-- selecione --</option><option th:each="r : ${lanche}" th:value="${r.id}" th:text="${r.nome}"></option></select></div><button type="button" onclick="adicionarSelect(this,'diaUmReceitas')">+ Receita</button></td>
+
+            </td>
+        </tr>
+
+        <!-- Dia 3 -->
+        <tr>
+            <td>Dia 3</td>
+
+            <td><div><select name="diaTres"><option value="">-- selecione --</option><option th:each="r : ${lanche}" th:value="${r.id}" th:text="${r.nome}"></option></select></div><button type="button" onclick="adicionarSelect(this,'diaTresReceitas')">+ Receita</button></td>
+            <td><div><select name="diaTres"><option value="">-- selecione --</option><option th:each="r : ${lanche}" th:value="${r.id}" th:text="${r.nome}"></option></select></div><button type="button" onclick="adicionarSelect(this,'diaUmReceitas')">+ Receita</button></td>
+
+            <td><div><select name="diaTres"><option value="">-- selecione --</option><option th:each="r : ${refeicao}" th:value="${r.id}" th:text="${r.nome}"></option></select></div><button type="button" onclick="adicionarSelect(this,'diaUmReceitas')">+ Receita</button></td>
+
+            <td><div><select name="diaTres"><option value="">-- selecione --</option><option th:each="r : ${lanche}" th:value="${r.id}" th:text="${r.nome}"></option></select></div><button type="button" onclick="adicionarSelect(this,'diaUmReceitas')">+ Receita</button></td>
+
+            <td><div><select name="diaTres"><option value="">-- selecione --</option><option th:each="r : ${refeicao}" th:value="${r.id}" th:text="${r.nome}"></option></select></div><button type="button" onclick="adicionarSelect(this,'diaUmReceitas')">+ Receita</button></td>
+
+            <td><div><select name="diaTres"><option value="">-- selecione --</option><option th:each="r : ${lanche}" th:value="${r.id}" th:text="${r.nome}"></option></select></div><button type="button" onclick="adicionarSelect(this,'diaUmReceitas')">+ Receita</button></td>
+
+            </td>
+        </tr>
+
+        <!-- Dia 4 -->
+        <tr>
+            <td>Dia 4</td>
+
+            <td><div><select name="diaQuatro"><option value="">-- selecione --</option><option th:each="r : ${lanche}" th:value="${r.id}" th:text="${r.nome}"></option></select></div><button type="button" onclick="adicionarSelect(this,'diaQuatroReceitas')">+ Receita</button></td>
+            <td><div><select name="diaQuatro"><option value="">-- selecione --</option><option th:each="r : ${lanche}" th:value="${r.id}" th:text="${r.nome}"></option></select></div><button type="button" onclick="adicionarSelect(this,'diaUmReceitas')">+ Receita</button></td>
+
+            <td><div><select name="diaQuatro"><option value="">-- selecione --</option><option th:each="r : ${refeicao}" th:value="${r.id}" th:text="${r.nome}"></option></select></div><button type="button" onclick="adicionarSelect(this,'diaUmReceitas')">+ Receita</button></td>
+
+            <td><div><select name="diaQuatro"><option value="">-- selecione --</option><option th:each="r : ${lanche}" th:value="${r.id}" th:text="${r.nome}"></option></select></div><button type="button" onclick="adicionarSelect(this,'diaUmReceitas')">+ Receita</button></td>
+
+            <td><div><select name="diaQuatro"><option value="">-- selecione --</option><option th:each="r : ${refeicao}" th:value="${r.id}" th:text="${r.nome}"></option></select></div><button type="button" onclick="adicionarSelect(this,'diaUmReceitas')">+ Receita</button></td>
+
+            <td><div><select name="diaQuatro"><option value="">-- selecione --</option><option th:each="r : ${lanche}" th:value="${r.id}" th:text="${r.nome}"></option></select></div><button type="button" onclick="adicionarSelect(this,'diaUmReceitas')">+ Receita</button></td>
+
+            </td>
+        </tr>
+
+        </tbody>
+    </table>
+
+    <button type="submit">Salvar Cardápio</button>
+</form>
+
+<form th:action="@{/cardapio/lista-compras}" method="post">
+    <button type="submit">Gerar Lista de Compras (Excel)</button>
+</form>
+
+<script>
+    function adicionarSelect(btn, refeicao) {
+        const container = btn.previousElementSibling;
+        const select = document.createElement('select');
+        select.name = refeicao;
+
+        const option = document.createElement('option');
+        option.value = "";
+        option.text = "-- selecione --";
+        select.appendChild(option);
+
+        const template = container.querySelector('select');
+        if (template) {
+            select.innerHTML = template.innerHTML;
+        }
+
+        container.appendChild(select);
+    }
+</script>
+
+</body>
+</html>

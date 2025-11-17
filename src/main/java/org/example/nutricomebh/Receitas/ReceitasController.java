@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/receitas")
@@ -14,9 +15,13 @@ public class ReceitasController {
 
 
     private final ReceitasService receitasService;
+    private final ReceitasRepository receitasRepository;
+    private final ReceitasMapper receitasMapper;
 
-    public ReceitasController(ReceitasService receitasService) {
+    public ReceitasController(ReceitasService receitasService, ReceitasRepository receitasRepository, ReceitasMapper receitasMapper) {
         this.receitasService = receitasService;
+        this.receitasRepository = receitasRepository;
+        this.receitasMapper = receitasMapper;
     }
 
     //Adiciona receita
@@ -64,5 +69,11 @@ public class ReceitasController {
         List<ReceitasDTO> receitas = receitasService.listaReceitas();
         return ResponseEntity.status(HttpStatus.OK).body(receitas);
     }
+    //Listar receita por categoria
+    @GetMapping("/mostrarPorCategoria")
+    public ResponseEntity<List<ReceitasDTO>> mostrarPorCategoria( Long categoria){
+        List <ReceitasDTO> receitasCategoria = receitasService.listarReceitaPorCategoria(categoria);
 
+        return ResponseEntity.status(HttpStatus.OK).body(receitasCategoria);
+    }
 }

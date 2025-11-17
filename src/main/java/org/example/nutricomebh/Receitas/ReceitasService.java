@@ -44,6 +44,21 @@ public class ReceitasService {
         Optional<ReceitasModel> receitasModel = receitasRepository.findById(id);
         return  receitasModel.map(receitasMapper::mapReceitas).orElse(null);
     }
+    //Listar receita por categoria
+    public List<ReceitasDTO> listarReceitaPorCategoria(Long categoria) {
+        //categoria = 2l;
+        List <ReceitasModel> receitasModel =receitasRepository.findAllByCategoria_Id(categoria);
+          List<ReceitasDTO> receitasDTOS = new ArrayList<>();
+          for (int i=0;i<receitasModel.size();) {
+              receitasDTOS.add(receitasMapper.mapReceitas( receitasModel.get(i)));
+
+              i++;
+              }
+
+        //System.out.println(receitasModel.get(1).getCategoria());
+      return  receitasDTOS;
+
+    }
     //Criar nova receita
     public ReceitasDTO criarReceita(ReceitasDTO receitasDTO) {
         ReceitasModel receitaNova = receitasMapper.mapReceitas(receitasDTO);

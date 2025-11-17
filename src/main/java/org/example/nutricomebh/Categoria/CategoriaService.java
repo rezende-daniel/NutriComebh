@@ -34,6 +34,8 @@ public class CategoriaService {
                 map(categoriaMapper::mapCategoria)
                 .collect(Collectors.toList());
     }
+    //Listar receita por categoria
+
     //Cria nova categoria
     public CategoriaDTO createCategoria(CategoriaDTO categoriaDTO) {
         CategoriaModel categoria = categoriaMapper.mapCategoria(categoriaDTO);
