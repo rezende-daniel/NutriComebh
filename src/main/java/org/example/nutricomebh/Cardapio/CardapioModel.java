@@ -24,16 +24,8 @@ public class CardapioModel {
 
     @ManyToMany
     @Column(name = "dia_um")
-    private List<ReceitasModel> diaUm = new ArrayList<>();
-    @ManyToMany
-    @Column(name = "dia_dois")
-    private List<ReceitasModel> diaDois = new ArrayList<>();
-    @ManyToMany
-    @Column(name = "dia_tres")
-    private List<ReceitasModel> diaTreis = new ArrayList<>();
-    @ManyToMany
-    @Column(name = "dia_quatro")
-    private List<ReceitasModel> diaQuatro = new ArrayList<>();
+    private List<ReceitasModel> receitasCardapio = new ArrayList<>();
+
 
     @Column(name = "numero_pessoas")
     private Integer numeroPessoas;

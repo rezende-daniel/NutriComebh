@@ -18,13 +18,9 @@ public class CardapioDTO {
     private Long id;
 
 
-    private List<ReceitasModel> diaUm = new ArrayList<>();
+    private List<ReceitasModel> receitasCardapio = new ArrayList<>();
 
-    private List<ReceitasModel> diaDois = new ArrayList<>();
 
-    private List<ReceitasModel> diaTreis = new ArrayList<>();
-
-    private List<ReceitasModel> diaQuatro = new ArrayList<>();
 
     private Integer numeroPessoas;
 

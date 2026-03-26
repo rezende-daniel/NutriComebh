@@ -45,4 +45,11 @@ public class ItemModel {
     @JoinColumn(name = "receita_id")
     @JsonIgnore
     private ReceitasModel receita;
+
+
+    public ItemModel(IngredienteModel ingrediente, MedidasModel medida, BigDecimal quantidade) {
+        this.ingrediente = ingrediente;
+        this.medida = medida;
+        this.quantidade = quantidade;
+    }
 }

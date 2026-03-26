@@ -28,4 +28,11 @@ public class MedidasModel {
 
     @OneToMany(mappedBy = "medida")
     private List<ItemModel> item;
+
+    public MedidasModel(String medida) {
+        this.medida = medida;
+    }
+
+
+
 }

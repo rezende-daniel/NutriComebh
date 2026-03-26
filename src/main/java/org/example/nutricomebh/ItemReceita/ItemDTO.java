@@ -21,4 +21,11 @@ public class ItemDTO {
     private MedidasModel medida;
     private BigDecimal quantidade;
     private ReceitasModel receita;
+
+
+    public ItemDTO(IngredienteModel ingrediente, MedidasModel medida, BigDecimal quantidade) {
+        this.ingrediente = ingrediente;
+        this.medida = medida;
+        this.quantidade = quantidade;
+    }
 }

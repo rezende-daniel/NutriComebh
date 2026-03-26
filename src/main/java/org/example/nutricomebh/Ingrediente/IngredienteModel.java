@@ -42,4 +42,7 @@ public class IngredienteModel {
     @OneToMany(mappedBy = "ingrediente")
     private List<ItemModel> itens;
 
+    public IngredienteModel(String nome) {
+        this.nome = nome;
+    }
 }

@@ -29,6 +29,8 @@ public class CategoriaModel {
     @OneToMany(mappedBy = "categoria")
     private List<ReceitasModel> receitas;
 
-
-
+    @Override
+    public String toString() {
+        return  nome;
+    }
 }

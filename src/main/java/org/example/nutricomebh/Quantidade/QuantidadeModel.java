@@ -30,4 +30,8 @@ public class QuantidadeModel {
 
     @OneToOne
     private ItemModel item;
+
+    public QuantidadeModel(BigDecimal quantidade) {
+        this.quantidade = quantidade;
+    }
 }
