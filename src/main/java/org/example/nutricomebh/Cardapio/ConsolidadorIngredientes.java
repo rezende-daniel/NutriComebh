@@ -12,11 +12,12 @@ import org.example.nutricomebh.Receitas.ReceitasDTO;
 import org.example.nutricomebh.Receitas.ReceitasModel;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
 import java.util.*;
 @Component
 public class ConsolidadorIngredientes {
 
-    public List<ItemDTO> consolidar(List<ReceitasDTO> receitas) {
+    public List<ItemDTO> consolidar(List<ReceitasDTO> receitas,int numeroDePessoas) {
         System.out.println(receitas.size());
         Map<String, ItemDTO> mapa = new HashMap<>();
         final ItemMapper itemMapper = new ItemMapper();
@@ -26,7 +27,7 @@ public class ConsolidadorIngredientes {
         for (ReceitasDTO receita : receitas) {
             for (ItemDTO ing : itemMapper.mapitem( receita.getItens())) {
                 String chave = ing.getIngrediente().getNome().toLowerCase(); // normaliza o nome
-
+                ing.setQuantidade(ing.getQuantidade().multiply(BigDecimal.valueOf(numeroDePessoas/10)));
                 if (mapa.containsKey(chave)) {
                     // já existe → soma quantidade
                     ItemDTO existente = mapa.get(chave);

@@ -3,101 +3,199 @@
 <head>
     <meta charset="UTF-8">
     <title>Cardápio da Semana</title>
-    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background: #f0f4f8;
+            color: #333;
+        }
+
+        nav {
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            padding: 1rem;
+        }
+        nav li { margin: 0 1rem; }
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-weight: 500;
+            transition: background 0.3s, transform 0.2s;
+        }
+        nav a:hover { background: rgba(255,255,255,0.2); transform: translateY(-2px); }
+        nav a.active { background: rgba(255,255,255,0.3); }
+
+        main {
+            flex: 1;
+            padding: 2rem;
+            max-width: 1100px;
+            margin: auto;
+        }
+        h2 { margin-bottom: 1rem; color: #333; }
+
+        form {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        label { display: block; margin-top: 15px; font-weight: 500; }
+        input[type="number"], select {
+            padding: 8px; margin-top: 5px;
+            border: 1px solid #ccc; border-radius: 4px;
+        }
+
+        table {
+            width: 100%; border-collapse: collapse; margin-top: 20px;
+        }
+        th, td {
+            padding: 10px; border: 1px solid #ddd; text-align: center;
+        }
+        th { background: #f0f0f0; }
+
+        button {
+            margin-top: 10px; padding: 8px 12px;
+            background: #4CAF50; color: #fff;
+            border: none; border-radius: 4px; cursor: pointer;
+        }
+        button:hover { background: #45a049; }
+        .remove-btn { background: #e74c3c; }
+        .remove-btn:hover { background: #c0392b; }
+
+        footer {
+            background: #fff;
+            text-align: center;
+            padding: 1rem;
+            box-shadow: 0 -2px 6px rgba(0,0,0,0.05);
+            font-size: 0.875rem;
+        }
+    </style>
 </head>
 <body>
 
-<h2>Cardápio da Semana</h2>
+<nav>
+    <ul>
+        <li><a th:href="@{/}" th:classappend="${page=='home'} ? 'active'">Home</a></li>
+        <li><a th:href="@{/adicionar/ui/paginaAdicionar}" th:classappend="${page=='adicionar'} ? 'active'">Adicionar</a></li>
+        <li><a th:href="@{/adicionar/ui/paginaListarIngrediente}" th:classappend="${page=='ingredientes'} ? 'active'">Ingredientes</a></li>
+        <li><a th:href="@{/receita/ui/listarReceitas}" th:classappend="${page=='receitas'} ? 'active'">Receitas</a></li>
+    </ul>
+</nav>
 
-<form th:action="@{/cardapio/ui/criarCardapio}" th:object="${cardapio}" method="post">
-    <div style="margin-bottom: 20px;">
-        <label for="numeroPessoas"><strong>Número de Pessoas:</strong></label>
-        <input type="number" id="numeroPessoas" th:field="*{numeroPessoas}" min="1" placeholder="Digite a quantidade"/>
-    </div>
+<main>
+    <h2>Cardápio da Semana</h2>
+
+    <form th:action="@{/cardapio/ui/criarCardapio}" th:object="${cardapio}" method="post">
+        <div style="margin-bottom: 20px;">
+            <label for="numeroPessoas"><strong>Número de Pessoas:</strong></label>
+            <input type="number" id="numeroPessoas" th:field="*{numeroPessoas}" min="1" placeholder="Digite a quantidade"/>
+        </div>
+
         <table>
-        <thead>
-        <tr>
-            <th>Dia</th>
-            <th>Café da Manhã</th>
-            <th>Lanche da Manhã</th>
-            <th>Almoço</th>
-            <th>Café da Tarde</th>
-            <th>Janta</th>
-            <th>Ceia</th>
-        </tr>
-        </thead>
-        <tbody>
+            <thead>
+            <tr>
+                <th>Dia</th>
+                <th>Café da Manhã</th>
+                <th>Lanche da Manhã</th>
+                <th>Almoço</th>
+                <th>Café da Tarde</th>
+                <th>Janta</th>
+                <th>Ceia</th>
+            </tr>
+            </thead>
+            <tbody>
 
-        <!-- Dia 1 -->
-        <tr>
-            <td>Dia 1</td>
-            <td><div><select name="receitasCardapio"><option value="">-- selecione --</option><option th:each="r : ${lanche}" th:value="${r.id}" th:text="${r.nome}"></option></select></div><button type="button" onclick="adicionarSelect(this,'receitasDTOS')">+ Receita</button></td>
-            <td><div><select name="receitasCardapio"><option value="">-- selecione --</option><option th:each="r : ${lanche}" th:value="${r.id}" th:text="${r.nome}"></option></select></div><button type="button" onclick="adicionarSelect(this,'receitasDTOS')">+ Receita</button></td>
-            <td><div><select name="receitasCardapio"><option value="">-- selecione --</option><option th:each="r : ${refeicao}" th:value="${r.id}" th:text="${r.nome}"></option></select></div><button type="button" onclick="adicionarSelect(this,'diaUmReceitas')">+ Receita</button></td>
-            <td><div><select name="receitasCardapio"><option value="">-- selecione --</option><option th:each="r : ${lanche}" th:value="${r.id}" th:text="${r.nome}"></option></select></div><button type="button" onclick="adicionarSelect(this,'diaUmReceitas')">+ Receita</button></td>
-            <td><div><select name="receitasCardapio"><option value="">-- selecione --</option><option th:each="r : ${refeicao}" th:value="${r.id}" th:text="${r.nome}"></option></select></div><button type="button" onclick="adicionarSelect(this,'diaUmReceitas')">+ Receita</button></td>
-            <td><div><select name="receitasCardapio"><option value="">-- selecione --</option><option th:each="r : ${lanche}" th:value="${r.id}" th:text="${r.nome}"></option></select></div><button type="button" onclick="adicionarSelect(this,'diaUmReceitas')">+ Receita</button></td>
-        </tr>
+            <!-- Dia 1 -->
+            <tr>
+                <td>Dia 1</td>
+                <td><div><select name="receitasCardapio"><option value="">-- selecione --</option><option th:each="r : ${lanche}" th:value="${r.id}" th:text="${r.nome}"></option></select></div><button type="button" onclick="adicionarSelect(this,'diaUmReceitas')">+ Receita</button></td>
+                <td><div><select name="receitasCardapio"><option value="">-- selecione --</option><option th:each="r : ${lanche}" th:value="${r.id}" th:text="${r.nome}"></option></select></div><button type="button" onclick="adicionarSelect(this,'diaUmReceitas')">+ Receita</button></td>
+                <td><div><select name="receitasCardapio"><option value="">-- selecione --</option><option th:each="r : ${refeicao}" th:value="${r.id}" th:text="${r.nome}"></option></select></div><button type="button" onclick="adicionarSelect(this,'diaUmReceitas')">+ Receita</button></td>
+                <td><div><select name="receitasCardapio"><option value="">-- selecione --</option><option th:each="r : ${lanche}" th:value="${r.id}" th:text="${r.nome}"></option></select></div><button type="button" onclick="adicionarSelect(this,'diaUmReceitas')">+ Receita</button></td>
+                <td><div><select name="receitasCardapio"><option value="">-- selecione --</option><option th:each="r : ${refeicao}" th:value="${r.id}" th:text="${r.nome}"></option></select></div><button type="button" onclick="adicionarSelect(this,'diaUmReceitas')">+ Receita</button></td>
+                <td><div><select name="receitasCardapio"><option value="">-- selecione --</option><option th:each="r : ${lanche}" th:value="${r.id}" th:text="${r.nome}"></option></select></div><button type="button" onclick="adicionarSelect(this,'diaUmReceitas')">+ Receita</button></td>
+            </tr>
 
-        <!-- Dia 2 -->
-        <tr>
-            <td>Dia 2</td>
+            <!-- Dia 2 -->
+            <tr>
+                <td>Dia 2</td>
 
-            <td><div><select name="receitasCardapio"><option value="">-- selecione --</option><option th:each="r : ${lanche}" th:value="${r.id}" th:text="${r.nome}"></option></select></div><button type="button" onclick="adicionarSelect(this,'diaDoisReceitas')">+ Receita</button></td>
-            <td><div><select name="receitasCardapio"><option value="">-- selecione --</option><option th:each="r : ${lanche}" th:value="${r.id}" th:text="${r.nome}"></option></select></div><button type="button" onclick="adicionarSelect(this,'diaUmReceitas')">+ Receita</button></td>
-            <td><div><select name="receitasCardapio"><option value="">-- selecione --</option><option th:each="r : ${refeicao}" th:value="${r.id}" th:text="${r.nome}"></option></select></div><button type="button" onclick="adicionarSelect(this,'diaUmReceitas')">+ Receita</button></td>
-            <td><div><select name="receitasCardapio"><option value="">-- selecione --</option><option th:each="r : ${lanche}" th:value="${r.id}" th:text="${r.nome}"></option></select></div><button type="button" onclick="adicionarSelect(this,'diaUmReceitas')">+ Receita</button></td>
-            <td><div><select name="receitasCardapio"><option value="">-- selecione --</option><option th:each="r : ${refeicao}" th:value="${r.id}" th:text="${r.nome}"></option></select></div><button type="button" onclick="adicionarSelect(this,'diaUmReceitas')">+ Receita</button></td>
-            <td><div><select name="receitasCardapio"><option value="">-- selecione --</option><option th:each="r : ${lanche}" th:value="${r.id}" th:text="${r.nome}"></option></select></div><button type="button" onclick="adicionarSelect(this,'diaUmReceitas')">+ Receita</button></td>
+                <td><div><select name="receitasCardapio"><option value="">-- selecione --</option><option th:each="r : ${lanche}" th:value="${r.id}" th:text="${r.nome}"></option></select></div><button type="button" onclick="adicionarSelect(this,'diaDoisReceitas')">+ Receita</button></td>
+                <td><div><select name="receitasCardapio"><option value="">-- selecione --</option><option th:each="r : ${lanche}" th:value="${r.id}" th:text="${r.nome}"></option></select></div><button type="button" onclick="adicionarSelect(this,'diaUmReceitas')">+ Receita</button></td>
+                <td><div><select name="receitasCardapio"><option value="">-- selecione --</option><option th:each="r : ${refeicao}" th:value="${r.id}" th:text="${r.nome}"></option></select></div><button type="button" onclick="adicionarSelect(this,'diaUmReceitas')">+ Receita</button></td>
+                <td><div><select name="receitasCardapio"><option value="">-- selecione --</option><option th:each="r : ${lanche}" th:value="${r.id}" th:text="${r.nome}"></option></select></div><button type="button" onclick="adicionarSelect(this,'diaUmReceitas')">+ Receita</button></td>
+                <td><div><select name="receitasCardapio"><option value="">-- selecione --</option><option th:each="r : ${refeicao}" th:value="${r.id}" th:text="${r.nome}"></option></select></div><button type="button" onclick="adicionarSelect(this,'diaUmReceitas')">+ Receita</button></td>
+                <td><div><select name="receitasCardapio"><option value="">-- selecione --</option><option th:each="r : ${lanche}" th:value="${r.id}" th:text="${r.nome}"></option></select></div><button type="button" onclick="adicionarSelect(this,'diaUmReceitas')">+ Receita</button></td>
 
-            </td>
-        </tr>
+                </td>
+            </tr>
 
-        <!-- Dia 3 -->
-        <tr>
-            <td>Dia 3</td>
+            <!-- Dia 3 -->
+            <tr>
+                <td>Dia 3</td>
 
-            <td><div><select name="receitasCardapio"><option value="">-- selecione --</option><option th:each="r : ${lanche}" th:value="${r.id}" th:text="${r.nome}"></option></select></div><button type="button" onclick="adicionarSelect(this,'diaTresReceitas')">+ Receita</button></td>
-            <td><div><select name="receitasCardapio"><option value="">-- selecione --</option><option th:each="r : ${lanche}" th:value="${r.id}" th:text="${r.nome}"></option></select></div><button type="button" onclick="adicionarSelect(this,'diaUmReceitas')">+ Receita</button></td>
+                <td><div><select name="receitasCardapio"><option value="">-- selecione --</option><option th:each="r : ${lanche}" th:value="${r.id}" th:text="${r.nome}"></option></select></div><button type="button" onclick="adicionarSelect(this,'diaTresReceitas')">+ Receita</button></td>
+                <td><div><select name="receitasCardapio"><option value="">-- selecione --</option><option th:each="r : ${lanche}" th:value="${r.id}" th:text="${r.nome}"></option></select></div><button type="button" onclick="adicionarSelect(this,'diaUmReceitas')">+ Receita</button></td>
 
-            <td><div><select name="receitasCardapio"><option value="">-- selecione --</option><option th:each="r : ${refeicao}" th:value="${r.id}" th:text="${r.nome}"></option></select></div><button type="button" onclick="adicionarSelect(this,'diaUmReceitas')">+ Receita</button></td>
+                <td><div><select name="receitasCardapio"><option value="">-- selecione --</option><option th:each="r : ${refeicao}" th:value="${r.id}" th:text="${r.nome}"></option></select></div><button type="button" onclick="adicionarSelect(this,'diaUmReceitas')">+ Receita</button></td>
 
-            <td><div><select name="receitasCardapio"><option value="">-- selecione --</option><option th:each="r : ${lanche}" th:value="${r.id}" th:text="${r.nome}"></option></select></div><button type="button" onclick="adicionarSelect(this,'diaUmReceitas')">+ Receita</button></td>
+                <td><div><select name="receitasCardapio"><option value="">-- selecione --</option><option th:each="r : ${lanche}" th:value="${r.id}" th:text="${r.nome}"></option></select></div><button type="button" onclick="adicionarSelect(this,'diaUmReceitas')">+ Receita</button></td>
 
-            <td><div><select name="receitasCardapio"><option value="">-- selecione --</option><option th:each="r : ${refeicao}" th:value="${r.id}" th:text="${r.nome}"></option></select></div><button type="button" onclick="adicionarSelect(this,'diaUmReceitas')">+ Receita</button></td>
+                <td><div><select name="receitasCardapio"><option value="">-- selecione --</option><option th:each="r : ${refeicao}" th:value="${r.id}" th:text="${r.nome}"></option></select></div><button type="button" onclick="adicionarSelect(this,'diaUmReceitas')">+ Receita</button></td>
 
-            <td><div><select name="receitasCardapio"><option value="">-- selecione --</option><option th:each="r : ${lanche}" th:value="${r.id}" th:text="${r.nome}"></option></select></div><button type="button" onclick="adicionarSelect(this,'diaUmReceitas')">+ Receita</button></td>
+                <td><div><select name="receitasCardapio"><option value="">-- selecione --</option><option th:each="r : ${lanche}" th:value="${r.id}" th:text="${r.nome}"></option></select></div><button type="button" onclick="adicionarSelect(this,'diaUmReceitas')">+ Receita</button></td>
 
-            </td>
-        </tr>
+                </td>
+            </tr>
 
-        <!-- Dia 4 -->
-        <tr>
-            <td>Dia 4</td>
+            <!-- Dia 4 -->
+            <tr>
+                <td>Dia 4</td>
 
-            <td><div><select name="receitasCardapio"><option value="">-- selecione --</option><option th:each="r : ${lanche}" th:value="${r.id}" th:text="${r.nome}"></option></select></div><button type="button" onclick="adicionarSelect(this,'diaQuatroReceitas')">+ Receita</button></td>
-            <td><div><select name="receitasCardapio"><option value="">-- selecione --</option><option th:each="r : ${lanche}" th:value="${r.id}" th:text="${r.nome}"></option></select></div><button type="button" onclick="adicionarSelect(this,'diaUmReceitas')">+ Receita</button></td>
+                <td><div><select name="receitasCardapio"><option value="">-- selecione --</option><option th:each="r : ${lanche}" th:value="${r.id}" th:text="${r.nome}"></option></select></div><button type="button" onclick="adicionarSelect(this,'diaQuatroReceitas')">+ Receita</button></td>
+                <td><div><select name="receitasCardapio"><option value="">-- selecione --</option><option th:each="r : ${lanche}" th:value="${r.id}" th:text="${r.nome}"></option></select></div><button type="button" onclick="adicionarSelect(this,'diaUmReceitas')">+ Receita</button></td>
 
-            <td><div><select name="receitasCardapio"><option value="">-- selecione --</option><option th:each="r : ${refeicao}" th:value="${r.id}" th:text="${r.nome}"></option></select></div><button type="button" onclick="adicionarSelect(this,'diaUmReceitas')">+ Receita</button></td>
+                <td><div><select name="receitasCardapio"><option value="">-- selecione --</option><option th:each="r : ${refeicao}" th:value="${r.id}" th:text="${r.nome}"></option></select></div><button type="button" onclick="adicionarSelect(this,'diaUmReceitas')">+ Receita</button></td>
 
-            <td><div><select name="receitasCardapio"><option value="">-- selecione --</option><option th:each="r : ${lanche}" th:value="${r.id}" th:text="${r.nome}"></option></select></div><button type="button" onclick="adicionarSelect(this,'diaUmReceitas')">+ Receita</button></td>
+                <td><div><select name="receitasCardapio"><option value="">-- selecione --</option><option th:each="r : ${lanche}" th:value="${r.id}" th:text="${r.nome}"></option></select></div><button type="button" onclick="adicionarSelect(this,'diaUmReceitas')">+ Receita</button></td>
 
-            <td><div><select name="receitasCardapio"><option value="">-- selecione --</option><option th:each="r : ${refeicao}" th:value="${r.id}" th:text="${r.nome}"></option></select></div><button type="button" onclick="adicionarSelect(this,'diaUmReceitas')">+ Receita</button></td>
+                <td><div><select name="receitasCardapio"><option value="">-- selecione --</option><option th:each="r : ${refeicao}" th:value="${r.id}" th:text="${r.nome}"></option></select></div><button type="button" onclick="adicionarSelect(this,'diaUmReceitas')">+ Receita</button></td>
 
-            <td><div><select name="receitasCardapio"><option value="">-- selecione --</option><option th:each="r : ${lanche}" th:value="${r.id}" th:text="${r.nome}"></option></select></div><button type="button" onclick="adicionarSelect(this,'diaUmReceitas')">+ Receita</button></td>
+                <td><div><select name="receitasCardapio"><option value="">-- selecione --</option><option th:each="r : ${lanche}" th:value="${r.id}" th:text="${r.nome}"></option></select></div><button type="button" onclick="adicionarSelect(this,'diaUmReceitas')">+ Receita</button></td>
 
-            </td>
-        </tr>
+                </td>
+            </tr>
 
-        </tbody>
-    </table>
+            </tbody>
+        </table>
 
-    <button type="submit">Salvar Cardápio</button>
-</form>
+        <button type="submit">Salvar Cardápio</button>
+    </form>
 
-<form th:action="@{/cardapio/ui/criarCardapio}" method="post">
-    <button type="submit">Gerar Lista de Compras (Excel)</button>
-</form>
+    <form th:action="@{/cardapio/ui/criarCardapio}" method="post">
+        <button type="submit">Gerar Lista de Compras (Excel)</button>
+    </form>
+</main>
+
+<footer>
+    <p>Meu Site de Receitas © 2026</p>
+</footer>
 
 <script>
     function adicionarSelect(btn, refeicao) {

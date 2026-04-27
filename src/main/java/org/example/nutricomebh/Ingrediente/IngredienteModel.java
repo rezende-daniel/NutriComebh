@@ -28,7 +28,7 @@ public class IngredienteModel {
     @Column(name = "ingrediente_id")
     private Long id;
 
-    @Column(name = "nome")
+    @Column(name = "nome",unique = true)
     private String nome;
 
     //@ManyToMany(mappedBy = "ingrediente")

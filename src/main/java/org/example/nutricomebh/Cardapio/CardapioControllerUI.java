@@ -40,7 +40,7 @@ public class CardapioControllerUI {
     }
     //Cria cardapio
     @PostMapping("/criarCardapio")
-    public ResponseEntity<byte[]> criaCardapio(@ModelAttribute CardapioDTO cardapioDTO,@ModelAttribute List <ReceitasDTO> receitasDTOS, RedirectAttributes redirectAttributes) throws IOException {
+    public ResponseEntity<byte[]> criaCardapio(@ModelAttribute CardapioDTO cardapioDTO, RedirectAttributes redirectAttributes) throws IOException {
        // cardapioService.criarCardapio(cardapioDTO);
         ResponseEntity<byte[]>excel = cardapioService.gerarExcel(cardapioDTO);
         redirectAttributes.addFlashAttribute("menssagem","Cardapio gerado com sucesso");

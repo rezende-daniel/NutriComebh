@@ -83,16 +83,24 @@ public class ReceitasService {
     }
     //Deletar receita
     public void deletarReceita(Long id) {
+        ReceitasDTO receitasDTOParaDeletar = listarReceitasPorId(id);
+        receitasDTOParaDeletar.getItens().forEach(item -> {itemRepository.deleteById(item.getId());});
         receitasRepository.deleteById(id);
     }
+
+
     //Editar receita
     public  ReceitasDTO editarReceita(ReceitasDTO receitasDTO,Long id) {
         Optional<ReceitasModel> receitaExiste = receitasRepository.findById(id);
+         receitaExiste.get().setPreparo(receitasDTO.getPreparo());
         if(receitaExiste.isPresent()) {
-            ReceitasModel receitaAtualizado = receitasMapper.mapReceitas(receitasDTO);
-            receitaAtualizado.setId(id);
-            ReceitasModel receitaModificado = receitasRepository.save(receitaAtualizado);
-            return receitasMapper.mapReceitas(receitaModificado);
+                for(int i =0;i<receitasDTO.getItens().size();i++) {
+                    receitaExiste.get().getItens().get(i).setQuantidade(receitasDTO.getItens().get(i).getQuantidade());
+
+                }
+            //receitaAtualizado.setId(id);
+            receitasRepository.save(receitaExiste.get());
+            return receitasMapper.mapReceitas(receitaExiste.get());
         }return  null;
     }
 

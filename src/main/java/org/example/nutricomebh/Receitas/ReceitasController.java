@@ -54,7 +54,7 @@ public class ReceitasController {
         }
     }
     //Edita receita
-    @PutMapping("/editaReceita/{id}")
+    @PutMapping("/editarReceita/{id}")
     public ResponseEntity<String> editaReceita(@RequestBody ReceitasDTO receitaAtualizada,@PathVariable Long id){
         if (receitasService.listarReceitasPorId(id) != null){
             receitasService.editarReceita(receitaAtualizada, id);

@@ -68,62 +68,7 @@ public class CardapioController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cardapior nao existe");
         }
     }
-    //Gerar lista para excel
-    /*
-    @GetMapping("/gerarListaExcel")
-    public ResponseEntity<byte[]> gerarListaExcel(@RequestBody CardapioDTO cardapioDTO ) throws IOException {
-        // 1) Busca cardápio
-        //CardapioDTO cardapioDTO = cardapioService.listarCardapioPorId(id);
-        System.out.println(cardapioDTO.getId());
-        // 2) Consolida ingredientes
-        ConsolidadorIngredientes cons = new ConsolidadorIngredientes();
-        List<ReceitasModel> todasReceitas = new ArrayList<>();
-        todasReceitas.addAll(cardapioDTO.getDiaUm());
-        todasReceitas.addAll(cardapioDTO.getDiaDois());
-        todasReceitas.addAll(cardapioDTO.getDiaTreis());
-        todasReceitas.addAll(cardapioDTO.getDiaQuatro());
-        List<ItemDTO> listaFinal = cons.consolidar(todasReceitas);
 
-        // 3) Cria workbook
-        Workbook workbook = new XSSFWorkbook();
-        Sheet sheet = workbook.createSheet("Lista de Compras");
-
-        // 4) Cabeçalho
-        Row header = sheet.createRow(0);
-        header.createCell(0).setCellValue("Ingrediente");
-        header.createCell(1).setCellValue("Quantidade");
-        header.createCell(2).setCellValue("Unidade");
-
-        // 5) Linhas de dados
-        int rowNum = 1;
-        for (ItemDTO item : listaFinal) {
-            Row row = sheet.createRow(rowNum++);
-            row.createCell(0).setCellValue(item.getIngrediente().getNome());
-            row.createCell(1).setCellValue((RichTextString) item.getQuantidade());
-            row.createCell(2).setCellValue(item.getMedida().getMedida());
-        }
-
-        // 6) Ajusta colunas
-        for (int i = 0; i < 3; i++) {
-            sheet.autoSizeColumn(i);
-        }
-
-        // 7) Converte para byte[]
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        workbook.write(out);
-        workbook.close();
-        byte[] bytes = out.toByteArray();
-
-        // 8) Monta headers para download
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(
-                MediaType.parseMediaType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
-        );
-        headers.setContentDispositionFormData("attachment", "lista_compras.xlsx");
-
-        // 9) Retorna como ResponseEntity
-        return new ResponseEntity<>(bytes, headers, HttpStatus.OK);
-    }*/
 
 }
 

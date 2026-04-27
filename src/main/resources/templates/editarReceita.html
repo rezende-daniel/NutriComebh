@@ -4,147 +4,165 @@
     <meta charset="UTF-8">
     <title>Editar Receita</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+        * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
-            font-family: Arial, sans-serif;
-            margin: 40px;
-            background-color: #f9f9f9;
-        }
-
-        h2 {
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background: #f0f4f8;
             color: #333;
         }
 
+        nav {
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            padding: 1rem;
+        }
+        nav li { margin: 0 1rem; }
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-weight: 500;
+            transition: background 0.3s, transform 0.2s;
+        }
+        nav a:hover { background: rgba(255,255,255,0.2); transform: translateY(-2px); }
+        nav a.active { background: rgba(255,255,255,0.3); }
+
+        main {
+            flex: 1;
+            padding: 2rem;
+            max-width: 900px;
+            margin: auto;
+        }
+        h2 { margin-bottom: 1rem; color: #333; }
+
         form {
-            background-color: #fff;
+            background: #fff;
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            max-width: 800px;
-            margin: auto;
         }
-
-        label {
-            display: block;
-            margin-top: 15px;
-            font-weight: bold;
-        }
-
-        input[type="text"],
-        input[type="number"],
-        textarea,
-        select {
-            width: 100%;
-            padding: 8px;
-            margin-top: 5px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
+        label { display: block; margin-top: 15px; font-weight: 500; }
+        input[type="text"], input[type="number"], textarea, select {
+            width: 100%; padding: 8px; margin-top: 5px;
+            border: 1px solid #ccc; border-radius: 4px;
         }
 
         table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
+            width: 100%; border-collapse: collapse; margin-top: 20px;
         }
-
         th, td {
-            padding: 10px;
-            border: 1px solid #ddd;
-            text-align: left;
+            padding: 10px; border: 1px solid #ddd; text-align: left;
         }
-
-        th {
-            background-color: #f0f0f0;
-        }
+        th { background: #f0f0f0; }
 
         button {
-            margin-top: 20px;
-            padding: 10px 15px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
+            margin-top: 20px; padding: 10px 15px;
+            background: #4CAF50; color: #fff;
+            border: none; border-radius: 4px; cursor: pointer;
         }
+        button:hover { background: #45a049; }
+        .remove-btn { background: #e74c3c; }
+        .remove-btn:hover { background: #c0392b; }
 
-        button:hover {
-            background-color: #45a049;
-        }
-
-        .remove-btn {
-            background-color: #e74c3c;
-        }
-
-        .remove-btn:hover {
-            background-color: #c0392b;
+        footer {
+            background: #fff;
+            text-align: center;
+            padding: 1rem;
+            box-shadow: 0 -2px 6px rgba(0,0,0,0.05);
+            font-size: 0.875rem;
         }
     </style>
 </head>
 <body>
 
-<h2>Editar Receita</h2>
+<nav>
+    <ul>
+        <li><a th:href="@{/}" th:classappend="${page=='home'} ? 'active'">Home</a></li>
+        <li><a th:href="@{/adicionar/ui/paginaAdicionar}" th:classappend="${page=='adicionar'} ? 'active'">Adicionar</a></li>
+        <li><a th:href="@{/adicionar/ui/paginaListarIngrediente}" th:classappend="${page=='ingredientes'} ? 'active'">Ingredientes</a></li>
+        <li><a th:href="@{/receita/ui/listarReceitas}" th:classappend="${page=='receitas'} ? 'active'">Receitas</a></li>
+        <li><a th:href="@{/cardapio/ui/paginaCardapio}" th:classappend="${page=='cardapio'} ? 'active'">Cardápio</a></li>
+    </ul>
+</nav>
 
-<form th:action="@{/editarReceitaBd}" th:object="${receita}" method="post">
-    <input type="hidden" th:field="*{id}" />
+<main>
+    <h2>Editar Receita</h2>
 
-    <label>Nome da Receita</label>
-    <input type="text" th:field="*{nome}" required>
+    <form th:action="@{'/receita/ui/editarReceita/'+${receita.id}}" th:object="${receita}" method="post">
+        <input type="hidden" th:field="*{id}" />
 
-    <label>Modo de Preparo</label>
-    <textarea th:field="*{preparo}" rows="1" required></textarea>
+        <label>Nome da Receita</label>
+        <input type="text" th:field="*{nome}" required>
 
-    <label>Categoria</label>
-    <select th:field="*{categoria.id}" required>
-        <option value="">-- selecione --</option>
-        <option th:each="cat : ${listaCategoria}" th:value="${cat.id}" th:text="${cat.nome}"
-                th:selected="${cat.id} == ${receita.categoria.id}"></option>
-    </select>
+        <label>Modo de Preparo</label>
+        <textarea th:field="*{preparo}" rows="3" required></textarea>
 
-    <h3>Ingredientes</h3>
-    <table>
-        <thead>
-        <tr>
-            <th>Ingrediente</th>
-            <th>Medida</th>
-            <th>Quantidade</th>
-            <th>Ação</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="item, iStat : *{itens}">
-            <td>
-                <h4 th:name="'itens[' + ${iStat.index} + '].ingrediente.id'" required>
+        <label>Categoria</label>
+        <select th:field="*{categoria.id}" required>
+            <option value="">-- selecione --</option>
+            <option th:each="cat : ${listaCategoria}" th:value="${cat.id}" th:text="${cat.nome}"
+                    th:selected="${cat.id} == ${receita.categoria.id}"></option>
+        </select>
 
-                    <option th:each="ing : ${receita.itens}" th:value="${ing.id}" th:text="${ing.ingrediente.nome}"
-                            th:selected="${ing.id} == ${item.ingrediente.id}"></option>
-                </h4>
-            </td>
-            <td>
-                <select th:name="'itens[' + ${iStat.index} + '].medida.id'" required>
-                    <option value="">-- selecione --</option>
-                    <option th:each="med : ${medidas}" th:value="${med.id}" th:text="${med.medida}"
-                            th:selected="${med.id} == ${item.medida.id}"></option>
-                </select>
-            </td>
-            <td>
-                <input type="number" th:name="'itens[' + ${iStat.index} + '].quantidade'"
-                       th:value="${item.quantidade}" step="0.1" required>
-            </td>
-            <td>
-                <button type="button" class="remove-btn" onclick="removerLinha(this)">✕</button>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+        <h3>Ingredientes</h3>
+        <table>
+            <thead>
+            <tr>
+                <th>Ingrediente</th>
+                <th>Medida</th>
+                <th>Quantidade</th>
 
-    <button type="submit">Salvar Alterações</button>
-</form>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="item, iStat : *{itens}">
+                <td>
+                    <span th:text="${item.ingrediente.nome}"></span>
+                    <input type="hidden" th:name="'itens[' + ${iStat.index} + '].ingrediente.id'"
+                           th:value="${item.ingrediente.id}" />
+                </td>
+                <td>
+                    <select th:name="'itens[' + ${iStat.index} + '].medida.id'" required>
+                        <option value="">-- selecione --</option>
+                        <option th:each="med : ${medidas}" th:value="${med.id}" th:text="${med.medida}"
+                                th:selected="${med.id} == ${item.medida.id}"></option>
+                    </select>
+                </td>
+                <td>
+                    <input type="number" th:name="'itens[' + ${iStat.index} + '].quantidade'"
+                           th:value="${item.quantidade}" step="0.1" required>
+                </td>
+
+            </tr>
+            </tbody>
+        </table>
+
+        <button type="submit">Salvar Alterações</button>
+    </form>
+</main>
+
+<footer>
+    <p>Meu Site de Receitas © 2026</p>
+</footer>
 
 <script>
     function removerLinha(btn) {
         btn.closest('tr').remove();
         reindexarCampos();
     }
-
     function reindexarCampos() {
         const rows = document.querySelectorAll('tbody tr');
         rows.forEach((row, i) => {
@@ -155,7 +173,6 @@
             });
         });
     }
-
     document.querySelector('form').addEventListener('submit', () => {
         reindexarCampos();
     });

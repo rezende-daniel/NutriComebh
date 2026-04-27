@@ -11,6 +11,8 @@ import org.example.nutricomebh.ItemReceita.ItemService;
 import org.example.nutricomebh.Medidas.MedidasDTO;
 import org.example.nutricomebh.Medidas.MedidasService;
 import org.example.nutricomebh.Quantidade.QuantidadeDTO;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -55,7 +57,10 @@ public class ReceitaControllerUI {
 
     //Adicionar receita
     @PostMapping("/adicionarReceitaBd")
-    public String adicionarReceita(@ModelAttribute("receita") ReceitasDTO receitasDTO,@ModelAttribute("listaIngredientes") List<IngredientesDTO> ingredientesDTO,@ModelAttribute("ListarMedidas") List<MedidasDTO> medidasDTO,@ModelAttribute List<QuantidadeDTO> quantidadeDTO,RedirectAttributes redirectAttributes) {
+    public String adicionarReceita(@ModelAttribute("receita") ReceitasDTO receitasDTO,
+                                   @ModelAttribute("listaIngredientes") List<IngredientesDTO> ingredientesDTO,
+                                   @ModelAttribute("ListarMedidas") List<MedidasDTO> medidasDTO,
+                                   @ModelAttribute List<QuantidadeDTO> quantidadeDTO,RedirectAttributes redirectAttributes) {
         System.out.println(ingredientesDTO);
         System.out.println(medidasDTO);
         System.out.println(quantidadeDTO);
@@ -77,17 +82,32 @@ public class ReceitaControllerUI {
     //Pagina de editar receita
     @GetMapping("/paginaEditarReceita/{id}")
     public String paginaEditarReceita(@PathVariable long id, Model model) {
+
         ReceitasDTO receita =receitasService.listarReceitasPorId(id);
         model.addAttribute("receita", receita);
         List<CategoriaDTO> listaCategoria = categoriaService.lisarCategorias();
         model.addAttribute("listaCategoria", listaCategoria);
-        /*List<ItemDTO> itens = itemService.listarIngredientesReceita(id);
-        model.addAttribute("itens", itens );*/
+        List<ItemDTO> itens = itemService.listarIngredientesReceita(id);
+        model.addAttribute("itens", itens );
         List<MedidasDTO> medidas = medidasService.listaMedidas();
         model.addAttribute("medidas", medidas );
         return "editarReceita";
     }
+    //Editar receita
+    @PostMapping("/editarReceita/{id}")
+    public String editaReceita(@ModelAttribute("receita") ReceitasDTO receitaAtualizada,
+                               @PathVariable Long id,
+                               @ModelAttribute("listaIngredientes") List<IngredientesDTO> ingredientesDTO,RedirectAttributes redirectAttributes){
+        System.out.println("para");
+        if (receitasService.listarReceitasPorId(id) != null){
+            receitasService.editarReceita(receitaAtualizada, id);
+            redirectAttributes.addFlashAttribute("message", "Receita atualizada com sucesso!");
 
+            return "/listarReceitas";
+        } else {
+            return "redirect:/";
+        }
+    }
 
 
 

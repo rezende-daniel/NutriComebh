@@ -126,10 +126,10 @@
 <nav>
     <ul>
         <li><a th:href="@{/}" th:classappend="${page=='home'} ? 'active'">Home</a></li>
-        <li><a th:href="@{/adicionar}" th:classappend="${page=='adicionar'} ? 'active'">Adicionar</a></li>
-        <li><a th:href="@{/ingredientes}" th:classappend="${page=='ingredientes'} ? 'active'">Ingredientes</a></li>
-        <li><a th:href="@{/receitas}" th:classappend="${page=='receitas'} ? 'active'">Receitas</a></li>
-        <li><a th:href="@{/cardapio}" th:classappend="${page=='cardapio'} ? 'active'">Cardápio</a></li>
+        <li><a th:href="@{/adicionar/ui/paginaAdicionar}" th:classappend="${page=='adicionar'} ? 'active'">Adicionar</a></li>
+        <li><a th:href="@{/adicionar/ui/paginaListarIngrediente}" th:classappend="${page=='ingredientes'} ? 'active'">Ingredientes</a></li>
+        <li><a th:href="@{/receita/ui/listarReceitas}" th:classappend="${page=='receitas'} ? 'active'">Receitas</a></li>
+        <li><a th:href="@{/cardapio/ui/paginaCardapio}" th:classappend="${page=='cardapio'} ? 'active'">Cardápio</a></li>
     </ul>
 </nav>
 

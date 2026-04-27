@@ -52,4 +52,12 @@ public class ItemModel {
         this.medida = medida;
         this.quantidade = quantidade;
     }
+    /*
+    @Override
+    public String toString() {
+        return "ItemModel{" +
+                "quantidade=" + quantidade +
+                '}';
+    }*/
+
 }

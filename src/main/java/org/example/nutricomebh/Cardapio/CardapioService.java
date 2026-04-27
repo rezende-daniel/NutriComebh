@@ -64,27 +64,14 @@ public class CardapioService {
 
     //Gerar excel
     public ResponseEntity<byte[]> gerarExcel(CardapioDTO cardapioDTO) throws IOException {
-        // Junta todas as receitas dos 4 dias
-        /*
-        System.out.println(cardapioDTO.getDiaUm().size());
-        System.out.println("Passou aqui 1");
-        List<ReceitasModel> todasReceitas = new ArrayList<>();
-        todasReceitas.addAll(cardapioDTO.getDiaUm());
-        System.out.println(todasReceitas.size());
-        todasReceitas.addAll(cardapioDTO.getDiaDois());
-        System.out.println(todasReceitas.size());
-        todasReceitas.addAll(cardapioDTO.getDiaTreis());
-        System.out.println(todasReceitas.size());
-        todasReceitas.addAll(cardapioDTO.getDiaQuatro());
-        System.out.println(todasReceitas.size());
-         */
+
         // Consolida ingredientes
         ConsolidadorIngredientes cons = new ConsolidadorIngredientes();
         List<ReceitasDTO> receitasDTOS = new ArrayList<>();
         for (int i=0; i < cardapioDTO.getReceitasCardapio().size();i++){
              receitasDTOS.add(receitasMapper.mapReceitas( cardapioDTO.getReceitasCardapio().get(i)));
         }
-        List<ItemDTO> listaFinal = cons.consolidar (receitasDTOS);
+        List<ItemDTO> listaFinal = cons.consolidar (receitasDTOS,cardapioDTO.getNumeroPessoas());
         System.out.println("Passou aqui 2");
         listaFinal.stream().map(ItemDTO::getIngrediente).forEach(System.out::println);
         // Cria workbook
@@ -101,9 +88,9 @@ public class CardapioService {
         int rowNum = 1;
         for (ItemDTO item : listaFinal) {
             Row row = sheet.createRow(rowNum++);
-            row.createCell(0).setCellValue(item.getIngrediente().getNome());
-            row.createCell(1).setCellValue(item.getQuantidade().toString());
-            row.createCell(2).setCellValue(item.getMedida().getMedida());
+            row.createCell(0).setCellValue( item.getIngrediente().getNome());
+            row.createCell(1).setCellValue( item.getQuantidade().toString());
+            row.createCell(2).setCellValue( item.getMedida().getMedida());
         }
 
         for (int i = 0; i < 3; i++) {
