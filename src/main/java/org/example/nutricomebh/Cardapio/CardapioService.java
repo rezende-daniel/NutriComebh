@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +31,7 @@ public class CardapioService {
     private final CardapioRepository cardapioRepository;
     private final CardapioMapper cardapioMapper;
     private final ReceitasMapper receitasMapper;
+    private final BigDecimal conversao = BigDecimal.valueOf(1000);
 
     public CardapioService(CardapioRepository cardapioRepository, CardapioMapper cardapioMapper, ReceitasMapper receitasMapper) {
         this.cardapioRepository = cardapioRepository;
@@ -71,7 +73,23 @@ public class CardapioService {
         for (int i=0; i < cardapioDTO.getReceitasCardapio().size();i++){
              receitasDTOS.add(receitasMapper.mapReceitas( cardapioDTO.getReceitasCardapio().get(i)));
         }
+
         List<ItemDTO> listaFinal = cons.consolidar (receitasDTOS,cardapioDTO.getNumeroPessoas());
+
+        for (ItemDTO item : listaFinal) {
+            if(item.getQuantidade().intValue()>=1000){
+                item.setQuantidade(item.getQuantidade().divide(conversao));
+                System.out.println("Passou dentro do for");
+
+                if(item.getMedida().getMedida().startsWith("Gr")){
+                    item.getMedida().setMedida("Quilos");
+                }
+                if(item.getMedida().getMedida().toString()=="Ml"){
+                    item.getMedida().setMedida("Litro");
+                }
+
+            }
+        }
         System.out.println("Passou aqui 2");
         listaFinal.stream().map(ItemDTO::getIngrediente).forEach(System.out::println);
         // Cria workbook
