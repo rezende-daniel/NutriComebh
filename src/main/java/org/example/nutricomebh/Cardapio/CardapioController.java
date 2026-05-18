@@ -1,6 +1,10 @@
 package org.example.nutricomebh.Cardapio;
 
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.apache.poi.ss.usermodel.RichTextString;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -48,20 +52,38 @@ public class CardapioController {
 
     //Adicionar cardapio
     @PostMapping("/criarCardapio")
-    public ResponseEntity<String> criarCardapio(@RequestBody CardapioDTO cardapioDTO){
+    @Operation(summary = "Cria um cardapio",description = "Cria um cardapio no BD para salvar os dados, ainda não tem mostra de cardapio mas podera ser utilizado no futuro,usado para gerar os arquivos excel")
+    @ApiResponses(value={
+            @ApiResponse(responseCode = "201",description = "Cardapio criado com sucesso"),
+            @ApiResponse(responseCode = "400",description = "Erro na criação do cardapio")
+    })
+    public ResponseEntity<String> criarCardapio(
+            @Parameter(description = "O cardapio com a lista de receitas sera enviado")@RequestBody CardapioDTO cardapioDTO){
+
         CardapioDTO novoCardapio = cardapioService.criarCardapio(cardapioDTO);
         return  ResponseEntity.status(HttpStatus.CREATED).body(novoCardapio.toString());
     }
 
     //Deleta cardapio
     @DeleteMapping("/deletarCardapio/{id}")
-    public ResponseEntity<String> deletarCardapio(@PathVariable Long id){
+    @Operation(summary = "Deleta um cardapio",description = "Procura um cardapio usando o ID e deleta, ainda nao tem uso")
+    @ApiResponses(value={
+            @ApiResponse(responseCode = "201",description = "Cardapio deletado com sucesso"),
+            @ApiResponse(responseCode = "404",description = "Erro ao deletar o cardapio")
+    })
+    public ResponseEntity<String> deletarCardapio(@Parameter(description = "Usuario manda no corpo da requisição o ID para apagar o cardapio")@PathVariable Long id){
         cardapioService.deletarCardapio(id);
         return ResponseEntity.ok().body("Cardapio deletado com sucesso");
     }
+
     //Procurar cardapio por Id
     @GetMapping("/procurarCardapioPorId/{id}")
-    public ResponseEntity<?> procurarCardapioPorId(@PathVariable Long id){
+    @Operation(summary = "Procura um cardapio por ID",description = "Procura um cardapio no BD usando o ID, ainda não tem uso")
+    @ApiResponses(value={
+            @ApiResponse(responseCode = "201",description = "Cardapio encontrado com sucesso"),
+            @ApiResponse(responseCode = "404",description = "Cardapio não encontrado")
+    })
+    public ResponseEntity<?> procurarCardapioPorId(@Parameter(description = "Usuario envia no corpo da requisição o Id para realizar a pesquisa")@PathVariable Long id){
         if (cardapioService.listarCardapioPorId(id)!=null){
             return ResponseEntity.ok(cardapioService.listarCardapioPorId(id));
         } else {
