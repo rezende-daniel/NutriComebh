@@ -49,7 +49,8 @@ public class ReceitaControllerUI {
         //ReceitasDTO receitasDTO = new ReceitasDTO();
         model.addAttribute("receita",new ReceitasDTO());
         model.addAttribute("listaCategoria",categoriaService.lisarCategorias());
-        model.addAttribute("listaIngredientes",ingredienteService.listarIngredientes());
+        model.addAttribute("listaIngredientes",ingredienteService.listarIngredientes().stream()
+                .sorted((n1,n2)-> CharSequence.compare(n1.getNome(), n2.getNome())).toList());
         model.addAttribute("ListarMedidas",medidasService.listaMedidas());
 
         return "adicionarReceita";
